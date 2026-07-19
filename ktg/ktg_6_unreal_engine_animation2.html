@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unreal Engine - animacje cz. 2</title>
+  <link rel="stylesheet" href="../css/course-page.css">
+</head>
+<body>
+  <nav class="right-nav" aria-label="Nawigacja po rozdziałach">
+    <strong>Rozdziały</strong>
+    <a href="#streszczenie">Streszczenie</a>
+    <a href="#metahuman">MetaHuman</a>
+    <a href="#tworzenie-wlasnej-animacji">Tworzenie własnej animacji</a>
+    <a href="#szkielet">Szkielet</a>
+    <a href="#podlewanie-grzadki">Podlewanie grządki</a>
+    <a href="#uzyznienie-ziemi">Użyźnienie ziemi</a>
+    <a href="#quiz">Quiz</a>
+    <a href="#zadanie">Zadanie</a>
+    <a href="#materialy">Materiały</a>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <p class="eyebrow">Unreal Engine - materiały dla kursantów</p>
+      <h1>Unreal Engine - animacje cz. 2</h1>
+    </header>
+
+    <section class="intro-card" id="streszczenie">
+      <h2>Streszczenie</h2>
+      <p>
+        Na tych zajęciach rozwijamy temat animacji postaci. Poznamy MetaHuman, zobaczymy, jak z nagrania wideo
+        przygotować animację humanoidalnej postaci, sprawdzimy, czym jest szkielet i socket, a następnie
+        wykorzystamy Animation Montage do podlewania grządki oraz tworzenia pola pod nogami gracza.
+      </p>
+    </section>
+
+    <section class="section" id="metahuman">
+      <h2>MetaHuman</h2>
+      <p class="lead">
+        <strong>MetaHuman</strong> to system Epic Games do tworzenia realistycznych cyfrowych ludzi. Zamiast modelować
+        twarz, włosy i ciało od zera, możemy skorzystać z gotowych baz postaci, a potem dopasować je do własnego pomysłu.
+      </p>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg6_ex11.png" alt="Widok narzędzia MetaHuman z przykładową postacią.">
+        <figcaption>
+          MetaHuman pomaga szybko przygotować postać, która ma gotowy model, materiały, rig twarzy i ciało zgodne
+          z narzędziami animacyjnymi Unreal Engine.
+        </figcaption>
+      </figure>
+
+      <p>
+        MetaHuman pozwala wybrać kilka gotowych postaci i zapożyczać elementy ich wyglądu do naszej postaci. Dzięki
+        temu możemy mieszać rysy twarzy, fryzury, proporcje i inne cechy, zamiast zaczynać od pustej sceny.
+      </p>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg6_ex12.png" alt="Ekran wyboru i edycji postaci MetaHuman.">
+        <figcaption>
+          Gotowe postaci są dobrym punktem startowym: wybieramy bazę, a potem stopniowo dopasowujemy wygląd do projektu.
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="tworzenie-wlasnej-animacji">
+      <h2>Tworzenie własnej animacji</h2>
+      <p class="lead">
+        Od wersji 5.8 Unreal Engine udostępnia możliwość tworzenia animacji dla humanoidalnych Pawnów za pomocą nagrań.
+        Oznacza to, że ruch wykonany przed kamerą może zostać przetworzony na animację, którą później uruchomimy na
+        postaci w projekcie.
+      </p>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg6_ex0.png" alt="Przykład nagrania przygotowanego do przetworzenia na animację.">
+      </figure>
+
+      <div class="callout curiosity">
+        <span class="callout-icon" aria-label="Informacja" title="Informacja">i</span>
+        <span>Wystarczy proste nagranie telefonem albo kamerą internetową. Najważniejsze jest to, żeby postać była dobrze widoczna, a ruch czytelny.</span>
+      </div>
+
+      <details class="script-drawer">
+        <summary><span class="script-icon">UE</span> Przygotowanie animacji z nagrania</summary>
+
+        <ol class="steps">
+          <li>
+            Zainstaluj wtyczki dla MetaHuman. Są potrzebne, aby Unreal Engine mógł obsłużyć narzędzia do przechwytywania
+            ruchu i przetwarzania nagrania.
+            <figure class="media-card">
+              <img src="ktg_assets/img/ktg6_ex1.png" alt="Lista wtyczek MetaHuman w Unreal Engine.">
+            </figure>
+          </li>
+          <li>
+            Otwórz <strong>Live Link Hub</strong>. To osobne narzędzie, które pomaga przygotować dane z nagrania do
+            dalszej pracy w Unreal Engine.
+            <figure class="media-card">
+              <img src="ktg_assets/img/ktg6_ex2.png" alt="Opcja uruchomienia Live Link Hub.">
+            </figure>
+          </li>
+          <li>
+            W Live Link Hub ustaw <strong>Capture Management</strong>, dodaj <strong>Mono Video Ingest</strong>, ustaw
+            katalog z nagraniami w polu <strong>Take Directory</strong>, wybierz wideo, dodaj je do kolejki przetworzenia,
+            a potem uruchom kolejkę.
+            <figure class="media-card">
+              <img src="ktg_assets/img/ktg6_ex3.png" alt="Konfiguracja Capture Management i Mono Video Ingest w Live Link Hub.">
+            </figure>
+          </li>
+          <li>
+            W <strong>Capture Managerze</strong> sprawdź przygotowane ujęcie i dane przechwytywania.
+            <figure class="media-card">
+              <img src="ktg_assets/img/ktg6_ex4.png" alt="Widok Capture Managera po przetworzeniu nagrania.">
+            </figure>
+          </li>
+          <li>
+            W każdym katalogu utwórz <strong>MetaHuman Performance</strong>. Ten zasób będzie odpowiadał za przetworzenie
+            ruchu z nagrania na dane animacji.
+            <figure class="media-card">
+              <img src="ktg_assets/img/ktg6_ex5.png" alt="Tworzenie zasobu MetaHuman Performance w katalogu projektu.">
+            </figure>
+          </li>
+          <li>
+            Ustaw wygenerowany <strong>Capture Data</strong> w polu <strong>Footage Capture Data</strong>, zaznacz
+            <strong>Body Tracking</strong>, a w <strong>Visualization Object</strong> wybierz stworzonego MetaHumana.
+            Jeśli go jeszcze nie masz, utwórz go wcześniej. Wciśnij <strong>Process</strong>, a gdy przetwarzanie się
+            skończy, wybierz <strong>Export Animation</strong>.
+            <figure class="media-card">
+              <img src="ktg_assets/img/ktg6_ex6.png" alt="Ustawienia MetaHuman Performance przed eksportem animacji.">
+            </figure>
+          </li>
+          <li>
+            Na utworzonym w ten sposób zasobie <strong>MetaHuman Performance</strong> wybierz
+            <strong>Retarget Animation</strong>, a następnie wskaż nasz szkielet, na przykład
+            <code>SKM_Quinn_Simple</code>.
+          </li>
+        </ol>
+      </details>
+
+      <div class="callout curiosity">
+        <span class="callout-icon" aria-label="Ciekawostka" title="Ciekawostka">i</span>
+        <span>
+          Temat nie jest nowy. Już <strong>Prince of Persia</strong> z 1989 roku, dzięki rotoskopii, oraz
+          <strong>L.A. Noire</strong> z 2011 roku, dzięki technologii MotionScan, wykorzystywały podobne techniki.
+          Były one jednak bardziej skomplikowane i wymagały specjalistycznego sprzętu albo wielu godzin pracy.
+        </span>
+      </div>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg6_pp_animation.jpg" alt="Porównanie klasycznych technik animacji i przechwytywania ruchu.">
+      </figure>
+    </section>
+
+    <section class="section" id="szkielet">
+      <h2>Szkielet</h2>
+      <p class="lead">
+        Szkielet w Unreal Engine działa podobnie jak szkielet w ciele człowieka, tylko jest ukryty wewnątrz modelu 3D.
+        Składa się z kości połączonych w hierarchię: kość dłoni jest podłączona do przedramienia, przedramię do ramienia,
+        a głowa do szyi. Gdy poruszamy kośćmi, porusza się też widoczny model postaci.
+      </p>
+
+      <p>
+        Szkielet jest potrzebny, żeby różne animacje mogły działać na tej samej postaci. Animacja nie zapisuje osobno
+        ruchu każdego punktu modelu, tylko mówi kościom, jak mają się przemieścić i obrócić w czasie.
+      </p>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg6_ex9.png" alt="Widok szkieletu postaci w Unreal Engine.">
+      </figure>
+
+      <p>
+        Szkielet naszej postaci możemy znaleźć, otwierając nasz Character i zaglądając w pole
+        <strong>Skeletal Mesh Asset</strong>.
+      </p>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg6_ex7.png" alt="Pole Skeletal Mesh Asset w ustawieniach postaci.">
+      </figure>
+
+      <p>
+        <strong>Socket</strong> w szkielecie to punkt zaczepienia przypisany do konkretnej kości. Możemy myśleć o nim
+        jak o małym uchwycie na dłoni, plecach albo głowie postaci. Do takiego socketu da się przypiąć przedmiot:
+        na przykład konewkę, miecz, szpadel albo kapelusz.
+      </p>
+
+      <div class="callout curiosity">
+        <span class="callout-icon" aria-label="Informacja" title="Informacja">i</span>
+        <span>
+          <strong>Socket</strong> służy do przypinania przedmiotów do postaci. <strong>Slot</strong> to osobne pojęcie
+          z systemu animacji: mówi, przez jaki kanał Animation Montage ma zostać odtworzony w AnimGraph.
+        </span>
+      </div>
+    </section>
+
+    <section class="section" id="podlewanie-grzadki">
+      <h2>Podlewanie grządki</h2>
+      <p class="lead">
+        Gdy wejdziemy na pole, włożymy w dłoń postaci konewkę i uruchomimy animację podlewania.
+      </p>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg6_ex8.png" alt="Postać podlewająca grządkę konewką.">
+      </figure>
+
+      <p>
+        Blueprint pola wykrywa wejście gracza w obszar kolizji. Następnie może uruchomić logikę odpowiedzialną za
+        pokazanie konewki w dłoni i odtworzenie animacji podlewania na postaci.
+      </p>
+
+      <details class="script-drawer">
+        <summary><span class="script-icon">BP</span> BP_Field</summary>
+        <div class="ue-blueprint-viewer" data-blueprint-viewer data-blueprint-title="BP_Field" data-bp-viewport-image="ktg_assets/bp/ktg6_bp_field_view.png">
+          <button type="button" class="ue-blueprint-expand-button" data-bp-open-modal aria-label="Otwórz Blueprint na całą szerokość" title="Otwórz na całą szerokość">[]</button>
+
+          <aside class="ue-blueprint-sidebar" aria-label="Panel Blueprint BP_Field">
+            <section class="ue-panel">
+              <div class="ue-panel-title"><span>Components</span></div>
+              <div class="ue-tree" data-bp-components>
+                <div class="ue-tree-item" data-icon="BP" data-title="BP_Field (Self)">
+                  <div class="ue-tree-item" data-icon="C" data-title="DefaultSceneRoot">
+                    <div class="ue-tree-item" data-icon="M" data-title="Cube" data-meta="Mesh">
+                      <div class="ue-tree-item" data-icon="B" data-title="Box" data-meta="Box Collision"></div>
+                      <div class="ue-tree-item" data-icon="M" data-title="plant1" data-meta="Mesh"></div>
+                      <div class="ue-tree-item" data-icon="M" data-title="plant2" data-meta="Mesh"></div>
+                      <div class="ue-tree-item" data-icon="M" data-title="plant3" data-meta="Mesh"></div>
+                      <div class="ue-tree-item" data-icon="M" data-title="plant4" data-meta="Mesh"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="ue-panel">
+              <div class="ue-panel-title"><span>My Blueprint</span></div>
+              <div class="ue-section-label">GRAPHS</div>
+              <button class="ue-tree-item is-active" type="button" data-icon="G" data-title="EventGraph" data-blueprint-view="eventGraph" data-bp-label="EventGraph" data-bp-image="ktg_assets/bp/ktg6_bp_field_event_graph.png"></button>
+            </section>
+          </aside>
+
+          <section class="ue-blueprint-main" aria-label="Podgląd Blueprint BP_Field">
+            <div class="ue-tabs" data-bp-tabs></div>
+            <div class="ue-toolbar">
+              <div class="ue-breadcrumb">
+                <span>BP_Field</span>
+                <span>&gt;</span>
+                <strong data-bp-title>EventGraph</strong>
+              </div>
+              <div class="ue-zoom-controls">
+                <button type="button" data-bp-zoom-out aria-label="Pomniejsz">-</button>
+                <button type="button" data-bp-zoom-reset aria-label="Resetuj przybliżenie">100%</button>
+                <button type="button" data-bp-zoom-in aria-label="Powiększ">+</button>
+              </div>
+            </div>
+            <div class="ue-graph-stage" data-bp-stage>
+              <div class="ue-graph-content" data-bp-content></div>
+            </div>
+          </section>
+        </div>
+      </details>
+    </section>
+
+    <section class="section" id="uzyznienie-ziemi">
+      <h2>Użyźnienie ziemi</h2>
+      <p class="lead">
+        Stworzymy akcję na <kbd>E</kbd>, która uruchomi animację kopania szpadlem. Aby uprościć przykład, zrobimy to
+        bez spawnowania szpadla. W połowie animacji stworzymy pole pod nogami gracza.
+      </p>
+
+      <p>
+        <strong>Montage</strong> pozwala nam wysłać do Blueprinta notyfikację w wybranym miejscu animacji. Można tak
+        wykonać na przykład combo ataków albo ustawić okno nieśmiertelności podczas uniku.
+      </p>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg6_ex10.png" alt="Animacja Montage z dodaną notyfikacją.">
+      </figure>
+
+      <p>
+        Gdy animacja dojdzie do wyznaczonego punktu, uruchomi <strong>On Notify Begin</strong> w nodzie
+        <strong>Play Montage</strong>. W polu <strong>Notify Name</strong> znajdziesz nazwę notyfikacji, dzięki czemu
+        można je rozróżniać, gdy w jednej animacji jest ich więcej.
+      </p>
+
+      <details class="script-drawer">
+        <summary><span class="script-icon">BP</span> BP_TopDownCharacter</summary>
+        <div class="ue-blueprint-viewer" data-blueprint-viewer data-blueprint-title="BP_TopDownCharacter" data-bp-viewport-image="ktg_assets/bp/ktg6_bp_top_down_character_view.png">
+          <button type="button" class="ue-blueprint-expand-button" data-bp-open-modal aria-label="Otwórz Blueprint na całą szerokość" title="Otwórz na całą szerokość">[]</button>
+
+          <aside class="ue-blueprint-sidebar" aria-label="Panel Blueprint BP_TopDownCharacter">
+            <section class="ue-panel">
+              <div class="ue-panel-title"><span>Components</span></div>
+              <div class="ue-tree" data-bp-components>
+                <div class="ue-tree-item" data-icon="BP" data-title="BP_TopDownCharacter (Self)">
+                  <div class="ue-tree-item" data-icon="C" data-title="DefaultSceneRoot">
+                    <div class="ue-tree-item" data-icon="C" data-title="Capsule Component">
+                      <div class="ue-tree-item" data-icon="A" data-title="Arrow Component"></div>
+                      <div class="ue-tree-item" data-icon="M" data-title="Mesh"></div>
+                      <div class="ue-tree-item" data-icon="S" data-title="SpringArm">
+                        <div class="ue-tree-item" data-icon="C" data-title="Camera"></div>
+                      </div>
+                    </div>
+                    <div class="ue-tree-item" data-icon="M" data-title="Character Movement"></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="ue-panel">
+              <div class="ue-panel-title"><span>My Blueprint</span></div>
+              <div class="ue-section-label">GRAPHS</div>
+              <button class="ue-tree-item is-active" type="button" data-icon="G" data-title="EventGraph" data-blueprint-view="eventGraph" data-bp-label="EventGraph" data-bp-image="ktg_assets/bp/ktg6_bp_top_down_character_event_graph.png"></button>
+            </section>
+          </aside>
+
+          <section class="ue-blueprint-main" aria-label="Podgląd Blueprint BP_TopDownCharacter">
+            <div class="ue-tabs" data-bp-tabs></div>
+            <div class="ue-toolbar">
+              <div class="ue-breadcrumb">
+                <span>BP_TopDownCharacter</span>
+                <span>&gt;</span>
+                <strong data-bp-title>EventGraph</strong>
+              </div>
+              <div class="ue-zoom-controls">
+                <button type="button" data-bp-zoom-out aria-label="Pomniejsz">-</button>
+                <button type="button" data-bp-zoom-reset aria-label="Resetuj przybliżenie">100%</button>
+                <button type="button" data-bp-zoom-in aria-label="Powiększ">+</button>
+              </div>
+            </div>
+            <div class="ue-graph-stage" data-bp-stage>
+              <div class="ue-graph-content" data-bp-content></div>
+            </div>
+          </section>
+        </div>
+      </details>
+
+      <div class="callout mistake">
+        <span class="callout-icon" aria-label="Ostrzeżenie" title="Ostrzeżenie">!</span>
+        <span>
+          Nasłuchiwanie po prostu na klawisz <kbd>E</kbd> nie jest najbardziej optymalnym rozwiązaniem. Na przykład nie
+          pozwala graczowi później zmienić sterowania. Bardziej eleganckie mapowanie przycisków zobaczymy na kolejnych lekcjach.
+        </span>
+      </div>
+    </section>
+
+    <section class="section" id="quiz">
+      <h2>Quiz</h2>
+      <div class="quiz" data-quiz aria-label="Quiz z animacji w Unreal Engine">
+        <div class="quiz-question">
+          <p>1. Do czego służy MetaHuman?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-correct="true">Do tworzenia i dopasowywania realistycznych cyfrowych postaci.</button>
+            <button class="quiz-option" type="button">Do kompresowania tekstur w projekcie.</button>
+            <button class="quiz-option" type="button">Do ustawiania kolizji na drzwiach.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>2. Co jest potrzebne, aby przygotować animację z nagrania?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Wyłącznie plik dźwiękowy.</button>
+            <button class="quiz-option" type="button" data-correct="true">Czytelne nagranie ruchu oraz narzędzia, takie jak Live Link Hub i MetaHuman Performance.</button>
+            <button class="quiz-option" type="button">Tylko nowy materiał na modelu postaci.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>3. Czym jest szkielet postaci w Unreal Engine?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-correct="true">Ukrytym zestawem kości, które poruszają modelem postaci.</button>
+            <button class="quiz-option" type="button">Listą poziomów w projekcie.</button>
+            <button class="quiz-option" type="button">Obrazem używanym jako tekstura skóry.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>4. Co zapisuje animacja postaci?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Nazwę projektu i ustawienia ekranu.</button>
+            <button class="quiz-option" type="button" data-correct="true">Ruch kości w czasie.</button>
+            <button class="quiz-option" type="button">Położenie wszystkich plików w Content Browserze.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>5. Do czego służy socket w szkielecie?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Do zmiany rozdzielczości obrazu.</button>
+            <button class="quiz-option" type="button" data-correct="true">Do wskazania punktu, do którego można przypiąć przedmiot na postaci.</button>
+            <button class="quiz-option" type="button">Do ustawiania koloru światła.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>6. Kiedy przydaje się Animation Montage?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-correct="true">Gdy animacja akcji ma wystartować w konkretnym momencie gry.</button>
+            <button class="quiz-option" type="button">Gdy chcemy zmienić nazwę folderu.</button>
+            <button class="quiz-option" type="button">Gdy tworzymy nową mapę świata.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>7. Po co dodajemy notyfikację w Montage?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Aby automatycznie usunąć animację po eksporcie.</button>
+            <button class="quiz-option" type="button" data-correct="true">Aby wysłać sygnał do Blueprinta w wybranym momencie animacji.</button>
+            <button class="quiz-option" type="button">Aby zmienić jasność edytora.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>8. Gdzie w Play Montage pojawia się nazwa uruchomionej notyfikacji?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">W polu Take Directory.</button>
+            <button class="quiz-option" type="button">W Skeletal Mesh Asset.</button>
+            <button class="quiz-option" type="button" data-correct="true">W polu Notify Name przy On Notify Begin.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>9. Co uruchamia podlewanie grządki w tym przykładzie?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-correct="true">Wykrywa wejście gracza na pole i uruchamia logikę podlewania.</button>
+            <button class="quiz-option" type="button">Zamienia wszystkie animacje na dźwięki.</button>
+            <button class="quiz-option" type="button">Tworzy nowego MetaHumana.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>10. Dlaczego samo nasłuchiwanie na klawisz E nie jest najlepszym rozwiązaniem?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Bo klawisz E nie działa w Unreal Engine.</button>
+            <button class="quiz-option" type="button" data-correct="true">Bo utrudnia późniejszą zmianę sterowania przez gracza.</button>
+            <button class="quiz-option" type="button">Bo zawsze usuwa Blueprint z poziomu.</button>
+          </div>
+        </div>
+
+        <div class="quiz-result" aria-live="polite">
+          Wynik: <span data-quiz-score>0</span>/<span data-quiz-total>10</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="zadanie">
+      <h2>Zadanie</h2>
+      <p class="lead">
+        Dodaj szpadel do przykładu „Użyźnienie ziemi”. Nie poddawaj się, gdy pojawi się frustracja. Trzymam za Ciebie kciuki.
+      </p>
+    </section>
+
+    <section class="section" id="materialy">
+      <h2>Materiały</h2>
+
+      <div class="callout mistake">
+        <span class="callout-icon" aria-label="Ostrzeżenie" title="Ostrzeżenie">!</span>
+        <span>
+          Materiał o <strong>L.A. Noire</strong> jest tu dlatego, że gra ma kategorię 18+, więc uczniowie w nią nie
+          zagrają, a sam koncept gry jest tak unikalny, że warto go poznać. Materiał nie zawiera brutalnych scen.
+        </span>
+      </div>
+
+      <div class="video-list" aria-label="Materiały do lekcji">
+        <a class="video-card" href="https://www.youtube.com/watch?v=OZrDng6lce0">
+          <img src="https://img.youtube.com/vi/OZrDng6lce0/hqdefault.jpg" alt="Miniatura filmu Animacje, które działają lepiej niż god mode.">
+          <strong>Animacje, które działają lepiej niż god mode</strong>
+          <span>Materiał o tym, jak animacje wpływają na odbiór sterowania, akcji i mocy postaci w grach.</span>
+        </a>
+
+        <a class="video-card" href="https://www.youtube.com/watch?v=OSf3WGQUQsA&amp;t=12s">
+          <img src="https://img.youtube.com/vi/OSf3WGQUQsA/hqdefault.jpg" alt="Miniatura filmu Jak twórcy gier oszukują w animacjach.">
+          <strong>Jak twórcy gier oszukują w animacjach</strong>
+          <span>Przykłady sprytnych uproszczeń, dzięki którym ruch w grach wygląda lepiej, niż wynikałoby to z samej symulacji.</span>
+        </a>
+
+        <a class="video-card" href="https://www.youtube.com/watch?v=laJNz1-PBqw">
+          <img src="https://img.youtube.com/vi/laJNz1-PBqw/hqdefault.jpg" alt="Miniatura filmu Animowanie twarzy w grach wideo.">
+          <strong>Animowanie twarzy w grach wideo</strong>
+          <span>Materiał o mimice, ekspresji i technikach, które pomagają ożywić twarze postaci.</span>
+        </a>
+
+        <a class="video-card" href="https://www.youtube.com/watch?v=3XUhmIguRxg">
+          <img src="https://img.youtube.com/vi/3XUhmIguRxg/hqdefault.jpg" alt="Miniatura filmu L.A. Noire - animacja twarzy jako główna mechanika.">
+          <strong>L.A. Noire - animacja twarzy jako główna mechanika</strong>
+          <span>Przykład gry, w której odczytywanie mimiki i zachowania postaci stało się ważną częścią rozgrywki.</span>
+        </a>
+
+        <a class="video-card" href="https://youtu.be/ebHiat0uJOw?si=qH_fv4eSDuLCVkIj&amp;t=295">
+          <img src="https://img.youtube.com/vi/ebHiat0uJOw/hqdefault.jpg" alt="Miniatura filmu o animacjach AI w ARC Raiders.">
+          <strong>Animacje AI w ARC Raiders</strong>
+          <span>Fragment o tym, jak animacje przeciwników pomagają graczowi zrozumieć intencje i stan postaci sterowanych przez AI.</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script src="../js/course-page.js" defer></script>
+</body>
+</html>

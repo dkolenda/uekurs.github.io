@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unreal Engine - animacje</title>
+  <link rel="stylesheet" href="css/course-page.css">
+</head>
+<body>
+  <nav class="right-nav" aria-label="Nawigacja po rozdziałach">
+    <strong>Rozdziały</strong>
+    <a href="#poruszanie-obiektow-w-czasie">Poruszanie obiektów w czasie</a>
+    <a href="#cutscenki">Cutscenki</a>
+    <a href="#jak-zrobic-prosta-cutscenke">Jak zrobić prostą cutscenkę</a>
+    <a href="#uruchomienie-animacji-akcji">Uruchomienie animacji akcji</a>
+    <a href="#quiz">Quiz</a>
+    <a href="#zadanie-dla-chetnych">Zadanie dla chętnych</a>
+    <a href="#materialy">Materiały</a>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <h1>Unreal Engine - animacje</h1>
+    </header>
+
+    <section class="intro-card">
+      <p>
+        Na tych zajęciach zobaczymy, że animacja w grze to nie tylko bieganie postaci. Możemy poruszać drzwiami,
+        kamerą, rekwizytami, a nawet uruchamiać krótkie scenki jak w filmie. Unreal Engine daje nam do tego kilka
+        wygodnych narzędzi: <strong>Timeline</strong>, <strong>Sequencer</strong> i <strong>Animation Montage</strong>.
+      </p>
+    </section>
+
+    <section class="section" id="poruszanie-obiektow-w-czasie">
+      <h2>Poruszanie obiektów w czasie</h2>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg2_ex2.png" alt="Przykład animacji obiektu w Unreal Engine.">
+      </figure>
+
+      <p class="lead">
+        W Blueprintach możemy użyć noda <strong>Timeline</strong>. To taki mały zegarek dla naszego Blueprinta:
+        odlicza czas i zwraca wartość, na przykład od <code>0</code> do <code>1</code>. Dzięki temu obiekt nie musi
+        nagle przeskakiwać z miejsca na miejsce. Może poruszać się płynnie, elegancko i bez teatralnego „puff!”.
+      </p>
+
+      <p>
+        Przy drzwiach Timeline może powoli obracać skrzydło drzwi. Na początku wartość wynosi <code>0</code>,
+        więc drzwi są zamknięte. Na końcu wartość wynosi <code>1</code>, więc drzwi są otwarte. Blueprint w każdej
+        chwili animacji sprawdza aktualną wartość i ustawia odpowiedni obrót.
+      </p>
+
+      <details class="script-drawer">
+        <summary><span class="script-icon">BP</span> BP_Door</summary>
+        <div class="ue-blueprint-viewer" data-blueprint-viewer data-blueprint-title="BP_Door" data-bp-viewport-image="ktg_assets/bp/ktg2_bp_door_view.png">
+          <button type="button" class="ue-blueprint-expand-button" data-bp-open-modal aria-label="Otwórz Blueprint na całą szerokość" title="Otwórz na całą szerokość">[]</button>
+
+          <aside class="ue-blueprint-sidebar" aria-label="Panel Blueprint BP_Door">
+            <section class="ue-panel">
+              <div class="ue-panel-title"><span>Components</span></div>
+              <div class="ue-tree" data-bp-components>
+                <div class="ue-tree-item" data-icon="BP" data-title="BP_Door (Self)">
+                  <div class="ue-tree-item" data-icon="C" data-title="DefaultSceneRoot">
+                    <div class="ue-tree-item" data-icon="M" data-title="DoorFrame">
+                      <div class="ue-tree-item" data-icon="M" data-title="Door"></div>
+                    </div>
+                    <div class="ue-tree-item" data-icon="B" data-title="EnterCollision"></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="ue-panel">
+              <div class="ue-panel-title"><span>My Blueprint</span></div>
+              <div class="ue-section-label">GRAPHS</div>
+              <button class="ue-tree-item is-active" type="button" data-icon="G" data-title="EventGraph" data-blueprint-view="eventGraph" data-bp-label="EventGraph" data-bp-image="ktg_assets/bp/ktg2_bp_door_event_graph.png"></button>
+            </section>
+          </aside>
+
+          <section class="ue-blueprint-main" aria-label="Podgląd Blueprint BP_Door">
+            <div class="ue-tabs" data-bp-tabs></div>
+            <div class="ue-toolbar">
+              <div class="ue-breadcrumb">
+                <span>BP_Door</span>
+                <span>&gt;</span>
+                <strong data-bp-title>EventGraph</strong>
+              </div>
+              <div class="ue-zoom-controls">
+                <button type="button" data-bp-zoom-out aria-label="Pomniejsz">-</button>
+                <button type="button" data-bp-zoom-reset aria-label="Resetuj przybliżenie">100%</button>
+                <button type="button" data-bp-zoom-in aria-label="Powiększ">+</button>
+              </div>
+            </div>
+            <div class="ue-graph-stage" data-bp-stage>
+              <div class="ue-graph-content" data-bp-content></div>
+            </div>
+          </section>
+        </div>
+      </details>
+
+      <p>
+        Najważniejszy pomysł jest prosty: <strong>Timeline mówi, jak daleko jesteśmy w animacji</strong>, a Blueprint
+        wykorzystuje tę liczbę do zmiany obiektu. Możemy tak otwierać drzwi, przesuwać platformę, podnosić windę albo
+        zrobić magiczną skrzynię, która otwiera się tak wolno, jakby chciała zbudować napięcie.
+      </p>
+    </section>
+
+    <section class="section" id="cutscenki">
+      <h2>Cutscenki</h2>
+
+      <p class="lead">
+        <strong>Sequencer</strong> to narzędzie do tworzenia krótkich scenek filmowych w Unreal Engine. Działa trochę
+        jak prosty program do montażu filmu: mamy oś czasu, kamery, obiekty i klatki kluczowe. Możemy ustawić, że kamera
+        najpierw patrzy na drzwi, potem drzwi się otwierają, a na końcu w kadr wchodzi postać.
+      </p>
+
+      <p>
+        Cutscenka przydaje się, gdy chcemy pokazać ważny moment bez zostawiania wszystkiego graczowi. Na przykład:
+        bohater znajduje tajne przejście, most powoli opada albo wielki przycisk robi bardzo poważne „klik”.
+        Tak, przyciski też lubią mieć swoje pięć sekund sławy.
+      </p>
+
+      <div class="lesson-subsection" id="jak-zrobic-prosta-cutscenke">
+        <h3>Jak zrobić prostą cutscenkę</h3>
+
+        <ol class="steps" style="counter-reset: step -1;">
+          <li>
+            Na początku mamy na scenie podłogę do przemieszczenia (<code>flayingFloor</code>), kamerę
+            (<code>CineCameraActor</code>) i wyzwalacz, który zareaguje na kolizję (<code>triggerBox</code>).
+            <figure class="media-card">
+              <img src="ktg_assets/img/ktg2_ex2_secuencer_1.png" alt="Scena z podłogą do przemieszczenia, kamerą i trigger boxem.">
+            </figure>
+          </li>
+          <li>
+            W Content Browserze klikamy prawym przyciskiem i wybieramy <strong>Cinematics &gt; Level Sequence</strong>.
+            Dodajemy go na scenę.
+            <figure class="media-card">
+              <img src="ktg_assets/img/ktg2_ex2_secuencer_2.png" alt="Tworzenie Level Sequence z menu Cinematics.">
+            </figure>
+          </li>
+          <li>Otwieramy utworzony plik.</li>
+          <li>
+            Dodajemy kamerę albo przeciągamy do Sequencera obiekt ze sceny, na przykład podłogę.
+            <figure class="media-card">
+              <img src="ktg_assets/img/ktg2_ex2_secuencer_3.png" alt="Dodawanie kamery lub obiektu do Sequencera.">
+            </figure>
+          </li>
+          <li>Ustawiamy znacznik czasu na początku i dodajemy pierwszy keyframe.</li>
+          <li>
+            Przesuwamy znacznik czasu dalej, zmieniamy pozycję kamery lub obrót obiektu i dodajemy drugi keyframe.
+            <figure class="media-card">
+              <img src="ktg_assets/img/ktg2_ex2_secuencer_4.png" alt="Ustawianie keyframe w Sequencerze.">
+            </figure>
+          </li>
+          <li>Klikamy <strong>Play</strong> i sprawdzamy, czy ruch wygląda dobrze.</li>
+          <li>
+            Jeśli chcesz, by obiekt został na miejscu po animacji, kliknij prawym przyciskiem na oś czasu animacji
+            konkretnego aktora: <strong>Properties</strong> &gt; <strong>When Finished</strong> &gt; <strong>Keep State</strong>.
+            <figure class="media-card">
+              <img src="ktg_assets/img/ktg2_ex2_secuencer_5.png" alt="Ustawienie When Finished na Keep State w Sequencerze.">
+            </figure>
+          </li>
+        </ol>
+
+        <details class="script-drawer">
+          <summary><span class="script-icon">BP</span> Level Blueprint</summary>
+          <div class="ue-blueprint-viewer" data-blueprint-viewer data-blueprint-title="Level Blueprint">
+            <button type="button" class="ue-blueprint-expand-button" data-bp-open-modal aria-label="Otwórz Blueprint na całą szerokość" title="Otwórz na całą szerokość">[]</button>
+
+            <aside class="ue-blueprint-sidebar" aria-label="Panel Level Blueprint">
+              <section class="ue-panel">
+                <div class="ue-panel-title"><span>My Blueprint</span></div>
+                <div class="ue-section-label">GRAPHS</div>
+                <button class="ue-tree-item is-active" type="button" data-icon="G" data-title="EventGraph" data-blueprint-view="eventGraph" data-bp-label="EventGraph" data-bp-image="ktg_assets/bp/ktg3_level_bp.png"></button>
+              </section>
+            </aside>
+
+            <section class="ue-blueprint-main" aria-label="Podgląd Level Blueprint">
+              <div class="ue-tabs" data-bp-tabs></div>
+              <div class="ue-toolbar">
+                <div class="ue-breadcrumb">
+                  <span>Level Blueprint</span>
+                  <span>&gt;</span>
+                  <strong data-bp-title>EventGraph</strong>
+                </div>
+                <div class="ue-zoom-controls">
+                  <button type="button" data-bp-zoom-out aria-label="Pomniejsz">-</button>
+                  <button type="button" data-bp-zoom-reset aria-label="Resetuj przybliżenie">100%</button>
+                  <button type="button" data-bp-zoom-in aria-label="Powiększ">+</button>
+                </div>
+              </div>
+              <div class="ue-graph-stage" data-bp-stage>
+                <div class="ue-graph-content" data-bp-content></div>
+              </div>
+            </section>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="section" id="uruchomienie-animacji-akcji">
+      <h2>Uruchomienie animacji akcji</h2>
+
+      <p class="lead">
+        Postać w Unreal Engine często składa się z dwóch ważnych części: <strong>modelu</strong> i
+        <strong>szkieletu</strong>. Model to widoczna postać, czyli jej wygląd. Szkielet to ukryte kości, które
+        pozwalają poruszać rękami, nogami, głową i innymi częściami ciała.
+      </p>
+
+      <p>
+        <strong>Animacja</strong> to zapis ruchu szkieletu. Może mówić: „podnieś rękę”, „zrób krok”, „machnij mieczem”
+        albo „pomachaj do gracza”. Gdy odtwarzamy animację, Unreal porusza kośćmi postaci zgodnie z przygotowanym ruchem.
+      </p>
+
+      <p>
+        <strong>Animation Montage</strong> to specjalny sposób uruchamiania animacji akcji. Przydaje się wtedy, gdy
+        animacja ma wystartować w konkretnym momencie gry, na przykład po kliknięciu przycisku, wejściu w trigger albo
+        podniesieniu przedmiotu. Montage możemy traktować jak krótką playlistę ruchów dla postaci.
+      </p>
+
+      <details class="script-drawer">
+        <summary><span class="script-icon">BP</span> BP_PushBox</summary>
+        <div class="ue-blueprint-viewer" data-blueprint-viewer data-blueprint-title="BP_PushBox" data-bp-viewport-image="ktg_assets/bp/ktg2_bp_pushBox_view.png">
+          <button type="button" class="ue-blueprint-expand-button" data-bp-open-modal aria-label="Otwórz Blueprint na całą szerokość" title="Otwórz na całą szerokość">[]</button>
+
+          <aside class="ue-blueprint-sidebar" aria-label="Panel Blueprint BP_PushBox">
+            <section class="ue-panel">
+              <div class="ue-panel-title"><span>Components</span></div>
+              <div class="ue-tree" data-bp-components>
+                <div class="ue-tree-item" data-icon="BP" data-title="BP_PushBox (Self)">
+                  <div class="ue-tree-item" data-icon="C" data-title="DefaultSceneRoot">
+                    <div class="ue-tree-item" data-icon="M" data-title="Cube">
+                      <div class="ue-tree-item" data-icon="M" data-title="Box"></div>
+                      <div class="ue-tree-item" data-icon="B" data-title="triggerToMoveBox"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="ue-panel">
+              <div class="ue-panel-title"><span>My Blueprint</span></div>
+              <div class="ue-section-label">GRAPHS</div>
+              <button class="ue-tree-item is-active" type="button" data-icon="G" data-title="EventGraph" data-blueprint-view="eventGraph" data-bp-label="EventGraph" data-bp-image="ktg_assets/bp/ktg2_bp_pushBox_event_graph.png"></button>
+            </section>
+          </aside>
+
+          <section class="ue-blueprint-main" aria-label="Podgląd Blueprint BP_PushBox">
+            <div class="ue-tabs" data-bp-tabs></div>
+            <div class="ue-toolbar">
+              <div class="ue-breadcrumb">
+                <span>BP_PushBox</span>
+                <span>&gt;</span>
+                <strong data-bp-title>EventGraph</strong>
+              </div>
+              <div class="ue-zoom-controls">
+                <button type="button" data-bp-zoom-out aria-label="Pomniejsz">-</button>
+                <button type="button" data-bp-zoom-reset aria-label="Resetuj przybliżenie">100%</button>
+                <button type="button" data-bp-zoom-in aria-label="Powiększ">+</button>
+              </div>
+            </div>
+            <div class="ue-graph-stage" data-bp-stage>
+              <div class="ue-graph-content" data-bp-content></div>
+            </div>
+          </section>
+        </div>
+      </details>
+    </section>
+
+    <section class="section" id="quiz">
+      <h2>Quiz</h2>
+
+      <div class="quiz" data-quiz aria-label="Quiz z treści dzisiejszych zajęć">
+        <div class="quiz-question">
+          <p>1. Do czego służy Timeline w Blueprintach?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-correct="true">Do zmiany wartości w czasie, na przykład od <code>0</code> do <code>1</code>.</button>
+            <button class="quiz-option" type="button">Do tworzenia materiałów dla postaci.</button>
+            <button class="quiz-option" type="button">Do zapisywania poziomu na dysku.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>2. Do czego przy otwieraniu drzwi przydaje się node <strong>Lerp</strong>?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-correct="true">Do wyliczenia płynnej wartości między obrotem zamkniętych i otwartych drzwi.</button>
+            <button class="quiz-option" type="button">Do sprawdzenia, czy gracz ma w ekwipunku klucz.</button>
+            <button class="quiz-option" type="button">Do utworzenia nowego Level Sequence w Content Browserze.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>3. Czym jest Sequencer?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-correct="true">Narzędziem do tworzenia krótkich scenek filmowych na osi czasu.</button>
+            <button class="quiz-option" type="button">Komponentem kolizji w drzwiach.</button>
+            <button class="quiz-option" type="button">Typem zmiennej przechowującej liczbę.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>4. Co zapisujemy za pomocą keyframe w cutscence?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Wyłącznie tytuł projektu.</button>
+            <button class="quiz-option" type="button" data-correct="true">Stan obiektu lub kamery w konkretnym momencie na osi czasu.</button>
+            <button class="quiz-option" type="button">Listę wszystkich Blueprintów w grze.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>5. Kiedy warto użyć ustawienia <strong>Keep State</strong>?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Gdy chcemy, by obiekt wrócił zawsze na początek animacji.</button>
+            <button class="quiz-option" type="button" data-correct="true">Gdy obiekt ma zostać na miejscu po zakończeniu animacji.</button>
+            <button class="quiz-option" type="button">Gdy chcemy usunąć wszystkie keyframe.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>6. Kiedy korzystamy z Level Blueprint?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-correct="true">Gdy zachowanie dotyczy tylko jednego levelu, na przykład uruchomienia cutscenki na tej scenie.</button>
+            <button class="quiz-option" type="button">Gdy chcemy stworzyć nową animację szkieletową dla każdej postaci w projekcie.</button>
+            <button class="quiz-option" type="button">Gdy tworzymy obiekt, którego chcemy używać wielokrotnie na wielu levelach.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>7. Czym jest animacja postaci?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Teksturą nakładaną na model.</button>
+            <button class="quiz-option" type="button" data-correct="true">Zapisem ruchu szkieletu.</button>
+            <button class="quiz-option" type="button">Nazwą kamery w Sequencerze.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>8. Do czego przydaje się Animation Montage?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Do ustawiania koloru nieba.</button>
+            <button class="quiz-option" type="button" data-correct="true">Do uruchamiania animacji akcji w konkretnym momencie gry.</button>
+            <button class="quiz-option" type="button">Do przenoszenia plików między folderami.</button>
+          </div>
+        </div>
+
+        <div class="quiz-result" aria-live="polite">
+          Wynik: <span data-quiz-score>0</span>/<span data-quiz-total>8</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="zadanie-dla-chetnych">
+      <h2>Zadanie dla chętnych</h2>
+      <p class="lead">
+        Stwórz ciasne przejście, przez które może przeciskać się gracz. Gdy gracz nim przejdzie, niech przejście
+        się zawali, blokując drogę powrotną.
+      </p>
+    </section>
+
+    <section class="section" id="materialy">
+      <h2>Materiały</h2>
+      <div class="video-list" aria-label="Materiały do lekcji">
+        <a class="video-card" href="https://www.youtube.com/watch?v=OSf3WGQUQsA&amp;list=PLFDyiz8X_3NU&amp;index=9">
+          <img src="https://img.youtube.com/vi/OSf3WGQUQsA/hqdefault.jpg" alt="Miniatura filmu Jak twórcy gier oszukują w animacjach.">
+          <strong>Jak twórcy gier oszukują w animacjach</strong>
+          <span>Materiał o sztuczkach i uproszczeniach, dzięki którym animacje w grach wyglądają płynnie i naturalnie.</span>
+        </a>
+        <a class="video-card" href="https://www.youtube.com/watch?v=0RAP_Fwkp9Y">
+          <img src="https://img.youtube.com/vi/0RAP_Fwkp9Y/hqdefault.jpg" alt="Miniatura filmu Jak płynie czas w grze wideo.">
+          <strong>Jak płynie czas w grze wideo?</strong>
+          <span>Materiał o tym, jak gry odmierzają czas i wykorzystują go do ruchu, animacji oraz zdarzeń.</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/course-page.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unreal Engine — pierwsze kroki</title>
+  <link rel="stylesheet" href="css/course-page.css">
+</head>
+<body>
+  <nav class="right-nav" aria-label="Nawigacja po rozdziałach">
+    <strong>Rozdziały</strong>
+    <a href="#streszczenie">Streszczenie zajęć</a>
+    <a href="#rozmieszczanie">Rozmieszczanie elementów</a>
+    <a href="#logika">Podstawy logiki</a>
+    <a href="#zdarzenia">Podstawowe zdarzenia</a>
+    <a href="#nody">Budowa noda</a>
+    <a href="#drabina">Teleport i drabina</a>
+    <a href="#zmienne">Zmienne</a>
+    <a href="#portal">Portal</a>
+    <a href="#quiz">Quiz</a>
+    <a href="#zadanie">Zadanie dla chętnych</a>
+    <a href="#materialy">Materiały dodatkowe</a>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <p class="eyebrow">Unreal Engine - materiały dla kursantów</p>
+      <h1>Unreal Engine — pierwsze kroki</h1>
+    </header>
+
+    <section class="intro-card" id="streszczenie">
+      <h2>Streszczenie zajęć</h2>
+      <p>
+        Poznajemy podstawy edytora Unreal Engine i uczymy się rozmieszczać obiekty na poziomie. Następnie
+        za pomocą Blueprintów tworzymy pierwsze mechaniki: drabinę działającą jak teleport oraz prosty portal.
+        Przy okazji dowiadujemy się, czym są zdarzenia, nody i zmienne.
+      </p>
+    </section>
+
+    <section class="section" id="rozmieszczanie">
+      <h2>Rozmieszczanie elementów</h2>
+      <p class="lead">
+        Podstawowym obiektem, który możemy umieścić na poziomie, jest <strong>Actor</strong>. Aktorem może być
+        światło, kamera, element otoczenia, drzwi albo portal.
+      </p>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg2_interface.png" alt="Interfejs edytora Unreal Engine z widokiem poziomu i panelami do rozmieszczania obiektów.">
+        <figcaption>
+          Rys. 1. Główne okno edytora Unreal Engine. Elementy z panelu Place Actors możemy przeciągać bezpośrednio na scenę.
+        </figcaption>
+      </figure>
+
+      <div class="grid" aria-label="Przykładowe elementy dostępne w panelu Place Actors">
+        <article class="tile">
+          <span class="tile-icon">1</span>
+          <h3>Podstawowe kształty</h3>
+          <p>Sześcian, kula, walec i inne proste bryły pomagają szybko zbudować szkic poziomu.</p>
+        </article>
+        <article class="tile">
+          <span class="tile-icon">2</span>
+          <h3>Światła i kamery</h3>
+          <p>Źródła światła budują wygląd sceny, a kamery pozwalają zaplanować widok gracza.</p>
+        </article>
+        <article class="tile">
+          <span class="tile-icon">3</span>
+          <h3>Triggery i efekty</h3>
+          <p>Obszary wyzwalające zdarzenia oraz efekty wizualne i dźwięki ożywiają poziom.</p>
+        </article>
+      </div>
+
+      <h3>Najważniejsze skróty</h3>
+      <div class="blue-info">
+        <div class="shortcut-row" aria-label="Skróty do pracy z obiektami na scenie">
+          <div class="shortcut">
+            <div class="keyline"><kbd>W</kbd></div>
+            <span class="shortcut-desc"><strong>Przesuwanie</strong> Włącza narzędzie zmiany położenia obiektu.</span>
+          </div>
+          <div class="shortcut">
+            <div class="keyline"><kbd>E</kbd></div>
+            <span class="shortcut-desc"><strong>Obracanie</strong> Włącza narzędzie zmiany obrotu obiektu.</span>
+          </div>
+          <div class="shortcut">
+            <div class="keyline"><kbd>R</kbd></div>
+            <span class="shortcut-desc"><strong>Skalowanie</strong> Włącza narzędzie zmiany rozmiaru obiektu.</span>
+          </div>
+          <div class="shortcut">
+            <div class="keyline"><kbd>Alt</kbd></div>
+            <span class="shortcut-desc"><strong>Kopiowanie</strong> Przytrzymaj Alt i przeciągnij obiekt, aby utworzyć kopię.</span>
+          </div>
+          <div class="shortcut">
+            <div class="keyline"><kbd>F</kbd></div>
+            <span class="shortcut-desc"><strong>Ustawienie widoku</strong> Skupia widok na zaznaczonym obiekcie.</span>
+          </div>
+          <div class="shortcut">
+            <div class="keyline"><kbd>End</kbd></div>
+            <span class="shortcut-desc"><strong>Na podłoże</strong> Opuszcza zaznaczony obiekt na powierzchnię pod nim.</span>
+          </div>
+          <div class="shortcut">
+            <div class="keyline"><kbd>Ctrl</kbd> + <kbd>Z</kbd></div>
+            <span class="shortcut-desc"><strong>Cofnij</strong> Cofa ostatnią wykonaną czynność.</span>
+          </div>
+          <div class="shortcut">
+            <div class="keyline"><kbd>Ctrl</kbd> + <kbd>S</kbd></div>
+            <span class="shortcut-desc"><strong>Zapisz</strong> Zapisuje zmiany w projekcie.</span>
+          </div>
+          <div class="shortcut">
+            <div class="keyline"><kbd>Delete</kbd></div>
+            <span class="shortcut-desc"><strong>Usuń</strong> Usuwa zaznaczony obiekt ze sceny.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="logika">
+      <h2>Podstawy logiki</h2>
+      <p class="lead">
+        Logikę gry możemy tworzyć za pomocą wizualnego systemu programowania <strong>Blueprint</strong>.
+        Zamiast wpisywać kod, łączymy nody — bloczki wykonujące określone zadania.
+      </p>
+
+      <h3>Gdzie umieszczamy logikę?</h3>
+      <div class="blueprint-layout" aria-label="Miejsca przechowywania logiki w Unreal Engine">
+        <div class="blueprint-map">
+          <article class="blueprint-card" data-label="GM">
+            <h3>GameMode</h3>
+            <p>Określa zasady rozgrywki, warunki zwycięstwa oraz domyślne klasy postaci i kontrolera używane na poziomie.</p>
+          </article>
+          <article class="blueprint-card" data-label="PC">
+            <h3>PlayerController</h3>
+            <p>Odbiera polecenia konkretnego gracza, zarządza sterowanym obiektem i może obsługiwać interfejs użytkownika.</p>
+          </article>
+          <article class="blueprint-card" data-label="CH">
+            <h3>Pawn / Character</h3>
+            <p>Reprezentuje sterowany obiekt. Character to rodzaj Pawna przygotowany do poruszania postacią.</p>
+          </article>
+          <article class="blueprint-card" data-label="LB">
+            <h3>Level Blueprint</h3>
+            <p>Przechowuje logikę jednego poziomu, na przykład uruchomienie sekwencji po wejściu do sali.</p>
+          </article>
+          <article class="blueprint-card" data-label="BP">
+            <h3>Własny Actor Blueprint</h3>
+            <p>Najlepsze miejsce na logikę obiektu, który chcemy wielokrotnie umieszczać na scenie, np. <code>BP_Door</code>.</p>
+          </article>
+          <article class="blueprint-card" data-label="GI">
+            <h3>GameInstance</h3>
+            <p>Przechowuje dane potrzebne również po zmianie poziomu, na przykład ustawienia lub stan rozpoczętej rozgrywki.</p>
+          </article>
+        </div>
+      </div>
+
+      <br/>
+      <h3>Prefiksy zasobów</h3>
+      <p>W unreal engine nie widać rozszeżeń plików, dlatego istnieje konwencja nazewnicza wykorzystujaca prefixy.</p>
+      <div class="naming-info">
+        <div class="shortcut-row naming-row" aria-label="Zalecane prefiksy nazw zasobów">
+          <div class="shortcut">
+            <div class="keyline"><kbd>BP_</kbd></div>
+            <span class="shortcut-desc"><strong>Blueprint</strong> Na przykład <code>BP_Door</code>.</span>
+          </div>
+          <div class="shortcut">
+            <div class="keyline"><kbd>WBP_</kbd></div>
+            <span class="shortcut-desc"><strong>Widget Blueprint</strong> Na przykład <code>WBP_MainMenu</code>.</span>
+          </div>
+          <div class="shortcut">
+            <div class="keyline"><kbd>SM_</kbd></div>
+            <span class="shortcut-desc"><strong>Static Mesh</strong> Na przykład <code>SM_Table</code>.</span>
+          </div>
+          <div class="shortcut">
+            <div class="keyline"><kbd>SK_</kbd></div>
+            <span class="shortcut-desc"><strong>Skeletal Mesh</strong> Na przykład <code>SK_Hero</code>.</span>
+          </div>
+          <div class="shortcut">
+            <div class="keyline"><kbd>M_</kbd></div>
+            <span class="shortcut-desc"><strong>Materiał</strong> Na przykład <code>M_Wood</code>.</span>
+          </div>
+          <div class="shortcut">
+            <div class="keyline"><kbd>MI_</kbd></div>
+            <span class="shortcut-desc"><strong>Instancja materiału</strong> Na przykład <code>MI_Wood_Dark</code>.</span>
+          </div>
+          <div class="shortcut">
+            <div class="keyline"><kbd>T_</kbd></div>
+            <span class="shortcut-desc"><strong>Tekstura</strong> Na przykład <code>T_Brick_D</code>.</span>
+          </div>
+          <div class="shortcut">
+            <div class="keyline"><kbd>AC_</kbd></div>
+            <span class="shortcut-desc"><strong>Actor Component</strong> Komponent z logiką dodawany do Actorów.</span>
+          </div>
+        </div>
+      </div>
+      <p>
+        Więcej przykładów znajdziesz w
+        <a href="https://dev.epicgames.com/documentation/unreal-engine/recommended-asset-naming-conventions-in-unreal-engine-projects">zaleceniach dotyczących nazewnictwa zasobów</a>.
+      </p>
+    </section>
+
+    <section class="section" id="zdarzenia">
+      <h2>Podstawowe zdarzenia</h2>
+      <p class="lead">
+        Zdarzenie uruchamia fragment logiki, gdy wydarzy się określona sytuacja: rozpocznie się gra, gracz
+        naciśnie klawisz albo wejdzie w obszar kolizji.
+      </p>
+
+      <div class="collision-panel">
+        <div class="collision-grid" aria-label="Najważniejsze zdarzenia Blueprint">
+          <article class="collision-card">
+            <h3><span class="collision-tag">1</span> Start i aktualizacja</h3>
+            <ul>
+              <li><strong>Event BeginPlay</strong> wykonuje się raz, gdy obiekt rozpoczyna działanie w grze.</li>
+              <li><strong>Event Tick</strong> wykonuje się w każdej klatce, jeśli obsługa Tick jest włączona.</li>
+            </ul>
+          </article>
+          <article class="collision-card">
+            <h3><span class="collision-tag">2</span> Actor Overlap</h3>
+            <ul>
+              <li><strong>Event ActorBeginOverlap</strong> reaguje, gdy inny Actor wejdzie w obszar kolizji.</li>
+              <li><strong>Event ActorEndOverlap</strong> reaguje, gdy inny Actor opuści ten obszar.</li>
+            </ul>
+          </article>
+          <article class="collision-card">
+            <h3><span class="collision-tag">3</span> Component Overlap</h3>
+            <ul>
+              <li><strong>On Component Begin Overlap</strong> dotyczy konkretnego komponentu, np. <code>Box Collision</code>.</li>
+            </ul>
+          </article>
+          <article class="collision-card">
+            <h3><span class="collision-tag">4</span> Sterowanie</h3>
+            <ul>
+              <li><strong>Input Action</strong> reaguje na skonfigurowaną akcję, np. skok lub interakcję.</li>
+              <li><strong>OnClicked</strong> uruchamia się po kliknięciu Actora lub jego komponentu.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+
+      <div class="callout mistake">
+        <span class="callout-icon" aria-label="Ostrzeżenie" title="Ostrzeżenie">!</span>
+        <span>Event Tick może wykonywać logikę dziesiątki razy na sekundę. Używaj go tylko wtedy, gdy operacja naprawdę musi działać w każdej klatce.</span>
+      </div>
+    </section>
+
+    <section class="section" id="nody">
+      <h2>Budowa noda</h2>
+      <p class="lead">
+        Pojedynczy bloczek w Blueprintach nazywamy <strong>nodem</strong>. Nody mają piny, za pomocą których
+        łączymy ścieżkę wykonania oraz przekazujemy dane.
+      </p>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg2_node.png" alt="Przykładowy node Blueprint z pinami wykonania i pinami danych.">
+        <figcaption>
+          Rys. 2. Białe piny ze strzałkami tworzą ścieżkę wykonania, a kolorowe okrągłe piny przekazują dane.
+        </figcaption>
+      </figure>
+
+      <div class="grid" aria-label="Rodzaje pinów w nodach Blueprint">
+        <article class="tile">
+          <h3>Piny wykonania</h3>
+          <p>Białe piny ze strzałkami określają kolejność uruchamiania połączonych nodów.</p>
+        </article>
+        <article class="tile">
+          <h3>Piny danych</h3>
+          <p>Kolorowe, okrągłe piny przekazują wartości. Lewa strona zwykle przyjmuje dane niezbedne do uruchomienia node, a prawa zwraca wynik np. wynik obliczen które wykonał node.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="drabina">
+      <h2>Teleport / drabina</h2>
+      <p class="lead">
+        Tworzymy prostą drabinę działającą jak teleport. Gdy gracz wejdzie w obszar kolizji, zostanie od razu
+        przeniesiony na górę. Takie rozwiązanie sprawdza się, gdy wspinanie nie wymaga osobnej animacji i pełnej mechaniki ruchu.
+      </p>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg2_ex1.png" alt="Przykład drabiny teleportującej postać na wyższy poziom.">
+        <figcaption>
+          Rys. 3. Drabina może działać jak prosty teleport — wejście w CollisionBox uruchamia zmianę położenia gracza.
+        </figcaption>
+      </figure>
+
+      <details class="script-drawer">
+        <summary><span class="script-icon">BP</span> BP_Ladder — komponenty i EventGraph</summary>
+        <div class="ue-blueprint-viewer" data-blueprint-viewer data-blueprint-title="BP_Ladder" data-bp-viewport-image="ktg_assets/bp/ktg2_bp_ladder_view.png">
+          <button type="button" class="ue-blueprint-expand-button" data-bp-open-modal aria-label="Otwórz Blueprint na całą szerokość" title="Otwórz na całą szerokość">⛶</button>
+
+          <aside class="ue-blueprint-sidebar" aria-label="Panel Blueprint BP_Ladder">
+            <section class="ue-panel">
+              <div class="ue-panel-title"><span>Components</span></div>
+              <div class="ue-tree" data-bp-components>
+                <div class="ue-tree-item" data-icon="◇" data-title="BP_Ladder (Self)">
+                  <div class="ue-tree-item" data-icon="◉" data-title="DefaultSceneRoot">
+                    <div class="ue-tree-item" data-icon="↗" data-title="Arrow"></div>
+                    <div class="ue-tree-item" data-icon="□" data-title="CollisionBox"></div>
+                    <div class="ue-tree-item" data-icon="▣" data-title="LadderMesh"></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="ue-panel">
+              <div class="ue-panel-title"><span>My Blueprint</span></div>
+              <div class="ue-section-label">GRAPHS</div>
+              <button class="ue-tree-item is-active" type="button" data-icon="::" data-title="EventGraph" data-blueprint-view="eventGraph" data-bp-label="EventGraph" data-bp-image="ktg_assets/bp/ktg2_bp_ladder_event_graph.png"></button>
+            </section>
+          </aside>
+
+          <section class="ue-blueprint-main" aria-label="Podgląd Blueprint BP_Ladder">
+            <div class="ue-tabs" data-bp-tabs></div>
+            <div class="ue-toolbar">
+              <div class="ue-breadcrumb">
+                <span>BP_Ladder</span>
+                <span>›</span>
+                <strong data-bp-title>EventGraph</strong>
+              </div>
+              <div class="ue-zoom-controls">
+                <button type="button" data-bp-zoom-out aria-label="Pomniejsz">−</button>
+                <button type="button" data-bp-zoom-reset aria-label="Resetuj przybliżenie">100%</button>
+                <button type="button" data-bp-zoom-in aria-label="Powiększ">+</button>
+              </div>
+            </div>
+            <div class="ue-graph-stage" data-bp-stage>
+              <div class="ue-graph-content" data-bp-content></div>
+            </div>
+          </section>
+        </div>
+      </details>
+    </section>
+
+    <section class="section" id="zmienne">
+      <h2>Pojemniki na dane — zmienne</h2>
+      <p class="lead">
+        Czesem w programach komputerowych potrzebujemy jakies informacje zapisać sobie na później.<br/>
+        Zmienne to nazwane pojemniki na informacje, które gra musi zapamiętać, na przykład „drzwi są otwarte”,
+        „gracz ma pięć jabłek” albo „piotrek ma klucz”.
+      </p>
+      <p>
+        Nazwa zmiennej powinna jasno informować, co przechowuje, np. <code>IsDoorOpen</code> lub
+        <code>AppleCount</code>. <br/>
+        Typ zmiennej określa, jakiego rodzaju wartości możemy w niej przechowywać np. prawda/fałsz, tekst, liczbe, wskazanie na aktora.
+      </p>
+
+      <div class="variable-grid" aria-label="Podstawowe typy zmiennych w Unreal Engine">
+        <article class="variable-card var-bool">
+          <h3>Boolean (Bool)</h3>
+          <p>Wartość <code>True</code> albo <code>False</code>, na przykład informacja, czy drzwi są otwarte.</p>
+        </article>
+        <article class="variable-card var-int">
+          <h3>Integer</h3>
+          <p>Liczba całkowita, na przykład liczba zebranych jabłek.</p>
+        </article>
+        <article class="variable-card var-int">
+          <h3>Float</h3>
+          <p>Liczba z częścią dziesiętną, na przykład pozostały czas: <code>12.5</code> sekundy.</p>
+        </article>
+        <article class="variable-card var-text">
+          <h3>String</h3>
+          <p>Ciąg znaków, który możemy modyfikować, na przykład imię wpisane przez gracza.</p>
+        </article>
+        <article class="variable-card var-text">
+          <h3>Text</h3>
+          <p>Tekst przeznaczony do wyświetlenia graczowi, na przykład treść zadania lub komunikatu. (W przeiwieństwie do String ma wbudowane mechanizmy ułatwiające lokalizacje)</p>
+        </article>
+        <article class="variable-card var-text">
+          <h3>Name</h3>
+          <p>Krótka nazwa lub identyfikator, na przykład nazwa przedmiotu w ekwipunku.</p>
+        </article>
+        <article class="variable-card var-int">
+          <h3>Vector</h3>
+          <p>Trzy liczby: X, Y i Z, opisujące na przykład położenie obiektu.</p>
+        </article>
+        <article class="variable-card var-int">
+          <h3>Rotator</h3>
+          <p>Obrót w trzech osiach, na przykład kierunek ustawienia portalu.</p>
+        </article>
+        <article class="variable-card var-int">
+          <h3>Transform</h3>
+          <p>Położenie, obrót i skala obiektu zapisane razem.</p>
+        </article>
+        <article class="variable-card var-actor">
+          <h3>Object Reference</h3>
+          <p>Odwołanie do konkretnego obiektu. Można wyobrazić sobie jako identyfikator aktora w grze. Gra potrafi aktora po tym znaleść by np. pobrać jego lokalizacje</p>
+        </article>
+      </div>
+
+      <div class="callout curiosity">
+        <span class="callout-icon" aria-label="Informacja" title="Informacja">i</span>
+        <span>W dalszej części kursu poznamy tablice przechowujące listę elementów tego samego typu oraz struktury łączące kilka informacji we własny typ danych.</span>
+      </div>
+      <div class="callout mistake">
+        <span class="callout-icon" aria-label="Ostrzeżenie" title="Ostrzeżenie">!</span>
+        <span>Nazwy w Unreal Engine, w tym nazwy zmiennych, nie powinny zawierać polskich znaków. Mogą one powodować problemy w działaniu programu.</span>
+      </div>
+    </section>
+
+    <section class="section" id="portal">
+      <h2>Portal</h2>
+      <p class="lead">
+        Portal tworzymy podobnie jak drabinę — zmieniając położenie gracza. Tym razem miejsce docelowe będzie
+        konfigurowalne osobno dla każdego portalu ustawionego na scenie.
+      </p>
+
+      <ol class="steps">
+        <li>Dodaj do poziomu pustego Actora lub <code>Target Point</code> w miejscu docelowym.</li>
+        <li>W Blueprincie portalu utwórz zmienną <code>DestinationTarget</code> typu <code>Actor</code>.</li>
+        <li>Włącz dla zmiennej ikonę otwartego oka, czyli opcję <strong>Instance Editable</strong>.</li>
+        <li>W panelu Details portalu przypisz do zmiennej przygotowany obiekt docelowy.</li>
+      </ol>
+
+      <details class="script-drawer">
+        <summary><span class="script-icon">BP</span> BP_Portal — komponenty, zmienna i EventGraph</summary>
+        <div class="ue-blueprint-viewer" data-blueprint-viewer data-blueprint-title="BP_Portal" data-bp-viewport-image="ktg_assets/bp/ktg2_bp_portal_view.png">
+          <button type="button" class="ue-blueprint-expand-button" data-bp-open-modal aria-label="Otwórz Blueprint na całą szerokość" title="Otwórz na całą szerokość">⛶</button>
+
+          <aside class="ue-blueprint-sidebar" aria-label="Panel Blueprint BP_Portal">
+            <section class="ue-panel">
+              <div class="ue-panel-title"><span>Components</span></div>
+              <div class="ue-tree" data-bp-components>
+                <div class="ue-tree-item" data-icon="◇" data-title="BP_Portal (Self)">
+                  <div class="ue-tree-item" data-icon="◉" data-title="DefaultSceneRoot">
+                    <div class="ue-tree-item" data-icon="□" data-title="Box" data-meta="Box Collision"></div>
+                    <div class="ue-tree-item" data-icon="▣" data-title="Portal" data-meta="Mesh"></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="ue-panel">
+              <div class="ue-panel-title"><span>My Blueprint</span></div>
+              <div class="ue-section-label">GRAPHS</div>
+              <button class="ue-tree-item is-active" type="button" data-icon="::" data-title="EventGraph" data-blueprint-view="eventGraph" data-bp-label="EventGraph" data-bp-image="ktg_assets/bp/ktg2_bp_portal_event_graph.png"></button>
+              <div class="ue-section-label">VARIABLES</div>
+              <div class="ue-tree" data-bp-variables>
+                <div class="ue-tree-item" data-icon="›" data-title="DestinationTarget" data-bp-variable-type="actor" data-bp-public="true"></div>
+              </div>
+            </section>
+          </aside>
+
+          <section class="ue-blueprint-main" aria-label="Podgląd Blueprint BP_Portal">
+            <div class="ue-tabs" data-bp-tabs></div>
+            <div class="ue-toolbar">
+              <div class="ue-breadcrumb">
+                <span>BP_Portal</span>
+                <span>›</span>
+                <strong data-bp-title>EventGraph</strong>
+              </div>
+              <div class="ue-zoom-controls">
+                <button type="button" data-bp-zoom-out aria-label="Pomniejsz">−</button>
+                <button type="button" data-bp-zoom-reset aria-label="Resetuj przybliżenie">100%</button>
+                <button type="button" data-bp-zoom-in aria-label="Powiększ">+</button>
+              </div>
+            </div>
+            <div class="ue-graph-stage" data-bp-stage>
+              <div class="ue-graph-content" data-bp-content></div>
+            </div>
+          </section>
+        </div>
+      </details>
+
+      <div class="callout mistake">
+        <span class="callout-icon" aria-label="Ostrzeżenie" title="Ostrzeżenie">!</span>
+        <span>Zanim przeniesiesz gracza, użyj <code>Is Valid</code>, aby sprawdzić, czy <code>DestinationTarget</code> został przypisany. Brak celu spowoduje błąd.</span>
+      </div>
+      <div class="callout mistake">
+        <span class="callout-icon" aria-label="Ostrzeżenie" title="Ostrzeżenie">!</span>
+        <span>Cel ustaw poza kolizją portalu docelowego i na wysokości środka kapsuły postaci. Inaczej gracz może pojawić się w podłodze albo od razu uruchomić kolejny teleport.</span>
+      </div>
+    </section>
+
+    <section class="section" id="quiz">
+      <h2>Quiz</h2>
+      <div class="quiz" data-quiz aria-label="Quiz sprawdzający wiedzę z pierwszych kroków w Unreal Engine">
+        <div class="quiz-question">
+          <p>1. Który klawisz włącza tryb przesuwania obiektu?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-correct="true">W</button>
+            <button class="quiz-option" type="button">E</button>
+            <button class="quiz-option" type="button">R</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>2. Czym różni się Event BeginPlay od Event Tick?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">BeginPlay działa co klatkę, a Tick tylko po kliknięciu.</button>
+            <button class="quiz-option" type="button" data-correct="true">BeginPlay działa raz na początku, a Tick może działać w każdej klatce.</button>
+            <button class="quiz-option" type="button">Oba zdarzenia zawsze działają tylko raz.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>3. Do czego służą białe piny ze strzałkami w nodach?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-correct="true">Tworzą ścieżkę wykonania i określają kolejność uruchamiania nodów.</button>
+            <button class="quiz-option" type="button">Przechowują wyłącznie tekst.</button>
+            <button class="quiz-option" type="button">Zmieniają kolor materiału.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>4. Jakie informacje może przechowywać zmienna typu Boolean?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Dowolną liczbę z częścią dziesiętną.</button>
+            <button class="quiz-option" type="button">Położenie X, Y i Z.</button>
+            <button class="quiz-option" type="button" data-correct="true">Wartość True albo False.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>5. Jakiego typu zmiennej użyjemy do zapisania liczby zebranych jabłek?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Text</button>
+            <button class="quiz-option" type="button" data-correct="true">Integer</button>
+            <button class="quiz-option" type="button">Rotator</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>6. Gdzie najlepiej umieścić logikę drzwi, których chcemy użyć na wielu poziomach?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">W każdym Level Blueprincie osobno.</button>
+            <button class="quiz-option" type="button" data-correct="true">We własnym Actor Blueprincie, np. BP_Door.</button>
+            <button class="quiz-option" type="button">W teksturze drzwi.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>7. Do czego służy komponent Box Collision w portalu?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-correct="true">Wykrywa wejście gracza w obszar portalu.</button>
+            <button class="quiz-option" type="button">Przechowuje nazwę poziomu.</button>
+            <button class="quiz-option" type="button">Wyświetla model portalu.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>8. Dlaczego dla DestinationTarget włączamy opcję Instance Editable?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Aby portal wykonywał Event Tick.</button>
+            <button class="quiz-option" type="button" data-correct="true">Aby osobno wskazać cel każdemu portalowi ustawionemu na scenie.</button>
+            <button class="quiz-option" type="button">Aby automatycznie utworzyć nowy poziom.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>9. Co sprawdzamy przed przeniesieniem gracza do DestinationTarget?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Czy Event Tick jest wyłączony.</button>
+            <button class="quiz-option" type="button">Czy portal ma materiał.</button>
+            <button class="quiz-option" type="button" data-correct="true">Czy cel jest poprawnie przypisany, używając Is Valid.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>10. Jakim skrótem szybko tworzymy kopię obiektu na scenie?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Ctrl + S</button>
+            <button class="quiz-option" type="button" data-correct="true">Alt + przeciągnięcie</button>
+            <button class="quiz-option" type="button">End + kliknięcie</button>
+          </div>
+        </div>
+
+        <div class="quiz-result" aria-live="polite">
+          Wynik: <span data-quiz-score>0</span>/<span data-quiz-total>10</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="zadanie">
+      <h2>Zadanie dla chętnych</h2>
+      <div class="grid">
+        <article class="tile">
+          <span class="tile-icon">1</span>
+          <h3>Proste: teleport podłogowy</h3>
+          <p>Zbuduj teleport podłogowy. Gdy gracz na niego wejdzie, powinien zostać przeniesiony do drugiego teleportu.</p>
+        </article>
+        <article class="tile">
+          <span class="tile-icon">2</span>
+          <h3>Trudne: zagadka</h3>
+          <p>Przygotuj krótką zagadkę wykorzystującą poznane mechaniki, np. kilka portali prowadzących do różnych miejsc.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="materialy">
+      <h2>Ciekawe materiały dodatkowe</h2>
+      <div class="callout mistake">
+        <span class="callout-icon" aria-label="Ostrzeżenie" title="Ostrzeżenie">!</span>
+        <span>Materiały są odpowiednie dla osób w różnym wieku. Filmy opisują mechanizmy z gier o różnym PEGI,
+          więc rodzice lub opiekunowie powinni zdecydować, które materiały może obejrzeć dziecko.</span>
+      </div>
+
+      <div class="video-list" aria-label="Lista materiałów dodatkowych">
+        <a class="video-card" href="https://www.youtube.com/watch?v=BZ3B8avY-t4&amp;t=371s">
+          <img src="https://img.youtube.com/vi/BZ3B8avY-t4/hqdefault.jpg" alt="Miniatura filmu 20 trików w Unreal Engine 5.">
+          <strong>20 trików w Unreal Engine 5</strong>
+          <span>Praktyczne skróty i techniki ułatwiające pracę w edytorze.</span>
+        </a>
+        <a class="video-card" href="https://www.youtube.com/watch?v=r_aQnkzYHe8">
+          <img src="https://img.youtube.com/vi/r_aQnkzYHe8/hqdefault.jpg" alt="Miniatura filmu Nie ma to jak drzwi w grach.">
+          <strong>Nie ma to jak DRZWI W GRACH</strong>
+          <span>Materiał o pozornie prostej mechanice, która potrafi sprawić twórcom wiele problemów.</span>
+        </a>
+        <a class="video-card" href="https://www.youtube.com/watch?v=Lmj2nbaAZK4">
+          <img src="https://img.youtube.com/vi/Lmj2nbaAZK4/hqdefault.jpg" alt="Miniatura filmu Najgroźniejszy wróg każdego gracza — drabina.">
+          <strong>Najgroźniejszy wróg każdego gracza — drabina</strong>
+          <span>Dlaczego drabiny są trudnym elementem do zaprojektowania i zaprogramowania.</span>
+        </a>
+        <a class="video-card" href="https://www.youtube.com/watch?v=XLej4is6Hps">
+          <img src="https://img.youtube.com/vi/XLej4is6Hps/hqdefault.jpg" alt="Miniatura filmu Jak działają portale.">
+          <strong>Jak działają PORTALE?</strong>
+          <span>Przykłady sztuczek i rozwiązań używanych do tworzenia portali w grach.</span>
+        </a>
+        <a class="video-card" href="https://www.youtube.com/watch?v=DocgXhYswfM">
+          <img src="https://img.youtube.com/vi/DocgXhYswfM/hqdefault.jpg" alt="Miniatura filmu Niemożliwe sztuczki twórców gier.">
+          <strong>Niemożliwe sztuczki twórców gier</strong>
+          <span>Sprytne rozwiązania, dzięki którym prosta logika daje efekt złożonej mechaniki.</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/course-page.js" defer></script>
+</body>
+</html>

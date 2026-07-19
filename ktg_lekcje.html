@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Linki do lekcji KTG</title>
+  <link rel="stylesheet" href="css/course-page.css">
+  <style>
+    .lesson-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .lesson-card {
+      display: grid;
+      min-height: 150px;
+      padding: 20px;
+      border: 1px solid #dde3ea;
+      border-radius: var(--radius);
+      background: #ffffff;
+      color: var(--muted);
+      text-decoration: none;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.07);
+    }
+
+    .lesson-card:hover,
+    .lesson-card:focus {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+      outline: none;
+    }
+
+    .lesson-card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #172033;
+      font-size: 1.2rem;
+      line-height: 1.25;
+    }
+
+    .lesson-card span {
+      display: block;
+      font-size: 0.95rem;
+      line-height: 1.45;
+    }
+
+    .lesson-meta {
+      align-self: end;
+      margin-top: 18px;
+      color: var(--primary-dark);
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 980px) {
+      .lesson-list {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="right-nav" aria-label="Nawigacja po lekcjach">
+    <strong>Lekcje</strong>
+    <a href="#lekcja-1">Lekcja 1</a>
+    <a href="#lekcja-2">Lekcja 2</a>
+    <a href="#lekcja-3">Lekcja 3</a>
+    <a href="#lekcja-4">Lekcja 4</a>
+    <a href="#lekcja-5">Lekcja 5</a>
+    <a href="#lekcja-6">Lekcja 6</a>
+    <a href="#lekcja-7">Lekcja 7</a>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <p class="eyebrow">KTG - szybkie otwieranie materiałów</p>
+      <h1>Linki do lekcji</h1>
+    </header>
+
+    <section class="intro-card">
+      <p>
+        Zebrane linki do lekcji KTG. Lekcje nieparzyste otwierają prezentacje Google, a lekcje parzyste otwierają
+        lokalne strony HTML z katalogu <code>ktg</code>. Wszystkie linki otwierają się w nowej karcie.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Lista lekcji</h2>
+
+      <div class="lesson-list" aria-label="Linki do lekcji KTG">
+        <a class="lesson-card" id="lekcja-1" href="https://docs.google.com/presentation/d/1xmQeCKGIWJx4IrpIYVyItrjOiQphjO72nY1IkC7O7V8/edit?usp=sharing" target="_blank" rel="noopener noreferrer">
+          <strong>Lekcja 1</strong>
+          <span>Prezentacja Google.</span>
+          <span class="lesson-meta">Otwórz prezentację</span>
+        </a>
+
+        <a class="lesson-card" id="lekcja-2" href="ktg/ktg_2_unreal_engine_ferst_step.html" target="_blank" rel="noopener noreferrer">
+          <strong>Lekcja 2 - Unreal Engine: pierwsze kroki</strong>
+          <span>Lokalna strona z katalogu <code>ktg</code>.</span>
+          <span class="lesson-meta">Otwórz stronę</span>
+        </a>
+
+        <a class="lesson-card" id="lekcja-3" href="https://docs.google.com/presentation/d/1mGvvK-uy0_IYTw_H-oValEcpxCb37vpFsZhU3j-p49Q/edit?usp=sharing" target="_blank" rel="noopener noreferrer">
+          <strong>Lekcja 3</strong>
+          <span>Prezentacja Google.</span>
+          <span class="lesson-meta">Otwórz prezentację</span>
+        </a>
+
+        <a class="lesson-card" id="lekcja-4" href="ktg/ktg_4_unreal_engine_animation.html" target="_blank" rel="noopener noreferrer">
+          <strong>Lekcja 4 - Unreal Engine: animacje</strong>
+          <span>Lokalna strona z katalogu <code>ktg</code>.</span>
+          <span class="lesson-meta">Otwórz stronę</span>
+        </a>
+
+        <a class="lesson-card" id="lekcja-5" href="https://docs.google.com/presentation/d/1UPtX9LwixOKrjx7JtUuxMoMluep2W5HfSQbIGq3Sxzs/edit?usp=sharing" target="_blank" rel="noopener noreferrer">
+          <strong>Lekcja 5</strong>
+          <span>Prezentacja Google.</span>
+          <span class="lesson-meta">Otwórz prezentację</span>
+        </a>
+
+        <a class="lesson-card" id="lekcja-6" href="ktg/ktg_6_unreal_engine_animation2.html" target="_blank" rel="noopener noreferrer">
+          <strong>Lekcja 6 - Unreal Engine: animacje cz. 2</strong>
+          <span>Lokalna strona z katalogu <code>ktg</code>.</span>
+          <span class="lesson-meta">Otwórz stronę</span>
+        </a>
+
+        <a class="lesson-card" id="lekcja-7" href="https://docs.google.com/presentation/d/1AtXLdgTvxU5UUs_R9PFSOuv4fWEmK0xZxgeooN16N6s/edit?usp=sharing" target="_blank" rel="noopener noreferrer">
+          <strong>Lekcja 7</strong>
+          <span>Prezentacja Google.</span>
+          <span class="lesson-meta">Otwórz prezentację</span>
+        </a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
