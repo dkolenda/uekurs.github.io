@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unreal Engine - optymalizacja cz. 1</title>
+  <link rel="stylesheet" href="css/course-page.css">
+</head>
+<body>
+  <nav class="right-nav" aria-label="Nawigacja po rozdziałach">
+    <strong>Rozdziały</strong>
+    <a href="#streszczenie">Streszczenie</a>
+    <a href="#wykrywanie-bledow">Wykrywanie błędów</a>
+    <a href="#reference-view-size-map">Reference View i Size Map</a>
+    <a href="#solid">SOLID</a>
+    <a href="#funkcje">Funkcje</a>
+    <a href="#komunikacja-miedzy-aktorami">Komunikacja</a>
+    <a href="#quiz">Quiz</a>
+    <a href="#zadanie">Zadanie</a>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <p class="eyebrow">Unreal Engine - materiały dla kursantów</p>
+      <h1>Unreal Engine - optymalizacja cz. 1</h1>
+    </header>
+
+    <section class="intro-card" id="streszczenie">
+      <h2>Streszczenie</h2>
+      <p>
+        Na dzisiejszych zajęciach uczymy się, jak wykrywać błędy w Blueprintach przez Print String,
+        Breakpoint i Draw Debug. Sprawdzamy zależności oraz rozmiar assetów za pomocą Reference View
+        i Size Map, poznajemy zasady SOLID oraz funkcje, a na koniec porównujemy trzy sposoby komunikacji
+        między aktorami: interface, Event Dispatcher i Event Subsystem.
+      </p>
+    </section>
+
+    <section class="section" id="wykrywanie-bledow">
+      <h2>Wykrywanie błędów</h2>
+      <p class="lead">
+        Debugowanie to sprawdzanie, co naprawdę dzieje się w grze. Zamiast zgadywać, możemy zatrzymać Blueprint,
+        wypisać wartość zmiennej albo narysować pomocniczy kształt bezpośrednio w świecie gry.
+      </p>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg8_ex0.png" alt="Przykłady narzędzi do wykrywania błędów w Blueprintach.">
+        <figcaption>
+          Pierwszy krok przy szukaniu błędu to zobaczyć, czy dany fragment Blueprinta w ogóle się uruchamia.
+        </figcaption>
+      </figure>
+
+      <div class="grid" aria-label="Sposoby debugowania Blueprintów">
+        <article class="tile">
+          <span class="tile-icon">P</span>
+          <h3>Print String</h3>
+          <p>
+            Wypisuje na ekranie tekst albo wartość zmiennej w trakcie działania gry. To najszybszy sposób,
+            żeby sprawdzić, czy dany fragment Blueprinta się wykonuje.
+          </p>
+        </article>
+
+        <article class="tile">
+          <span class="tile-icon">B</span>
+          <h3>Breakpoint</h3>
+          <p>
+            Zatrzymuje wykonywanie Blueprinta w wybranym miejscu. Dzięki temu możemy przejść przez kod krok po kroku
+            i podejrzeć aktualne wartości zmiennych.
+          </p>
+        </article>
+
+        <article class="tile">
+          <span class="tile-icon">D</span>
+          <h3>Draw Debug</h3>
+          <p>
+            Rysuje kształty w świecie gry, na przykład linię trace'a, miejsce trafienia albo zasięg ataku.
+            To bardzo pomaga przy logice, której nie widać na zwykłym modelu.
+          </p>
+        </article>
+
+        <article class="tile">
+          <span class="tile-icon">1</span>
+          <h3>Do Once</h3>
+          <p>
+            Gdy testowy Print String działa co klatkę, warto opakować go w <strong>Do Once</strong>.
+            Ekran nie zostanie wtedy zalany tą samą wiadomością.
+          </p>
+        </article>
+      </div>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg8_ex5.png" alt="Węzeł Print String używany do wypisania wartości w Blueprintcie.">
+        <figcaption>
+          Print String jest prosty, ale bardzo skuteczny: od razu pokazuje, czy logika dotarła do danego miejsca.
+        </figcaption>
+      </figure>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg8_ex6.png" alt="Przykład węzła Draw Debug rysującego pomocniczy kształt w świecie gry.">
+        <figcaption>
+          Draw Debug przydaje się szczególnie przy trace'ach, kolizjach, zasięgach i punktach trafienia.
+        </figcaption>
+      </figure>
+
+      <div class="callout curiosity">
+        <span class="callout-icon" aria-label="Ciekawostka" title="Ciekawostka">i</span>
+        <span>
+          Węzły debugujące mają zaznaczone pole <strong>Development Only</strong>. Dzięki temu automatycznie znikają
+          z finalnej wersji Shipping i nie obciążają wydajności gotowej gry.
+        </span>
+      </div>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg8_ex7.png" alt="Opcja Development Only widoczna przy węźle debugującym.">
+      </figure>
+    </section>
+
+    <section class="section" id="reference-view-size-map">
+      <h2>Reference View i Size Map</h2>
+      <p class="lead">
+        Optymalizacja zaczyna się od zrozumienia zależności. Reference View pokazuje, które assety są połączone,
+        a Size Map pomaga zobaczyć, co naprawdę zajmuje miejsce w pamięci i na dysku.
+      </p>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg8_ex4.png" alt="Opcje Reference Viewer i Size Map w menu assetu Unreal Engine.">
+        <figcaption>
+          Oba narzędzia uruchamiamy z menu kontekstowego assetu w Content Browserze.
+        </figcaption>
+      </figure>
+
+      <p>
+        <strong>Reference View</strong> pokazuje zależności między assetami w projekcie. Dzięki niemu możemy sprawdzić,
+        które obiekty korzystają z wybranego Blueprinta oraz jakie inne assety są potrzebne do jego działania.
+      </p>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg8_ex3.png" alt="Reference View pokazujący zależność BP_Field od BP_TopDownCharacter.">
+        <figcaption>
+          W przykładzie widać, że <code>BP_TopDownCharacter</code> jest potrzebny do działania
+          <code>BP_Field</code>. Taka zależność może przeszkadzać, gdy pole ma działać z różnymi typami postaci.
+        </figcaption>
+      </figure>
+
+      <p>
+        <strong>Size Map</strong> pokazuje, ile miejsca zajmuje wybrany asset razem z elementami, które są z nim
+        powiązane. To przydatne narzędzie, gdy pozornie prosty Blueprint robi się ciężki dla pamięci lub dysku.
+      </p>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg8_ex1.png" alt="Size Map wybranego assetu w Unreal Engine.">
+      </figure>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg8_ex2.png" alt="Powiększenie Size Map z dużym udziałem BP_TopDownCharacter.">
+        <figcaption>
+          Dużą część rozmiaru zajmuje <code>BP_TopDownCharacter</code>. Jednym z powodów jest użycie
+          <code>Cast To</code>, które tworzy mocną zależność od konkretnej klasy.
+        </figcaption>
+      </figure>
+
+      <div class="callout mistake">
+        <span class="callout-icon" aria-label="Ostrzeżenie" title="Ostrzeżenie">!</span>
+        <span>
+          <code>Cast To</code> nie jest zakazany. Problem zaczyna się wtedy, gdy przez cast wiele Blueprintów zaczyna
+          zależeć od jednej konkretnej klasy, chociaż potrzebują tylko jednej małej informacji albo akcji.
+        </span>
+      </div>
+    </section>
+
+    <section class="section" id="solid">
+      <h2>SOLID</h2>
+      <p class="lead">
+        SOLID to pięć zasad, które pomagają budować Blueprinty tak, żeby łatwo było je zmieniać, naprawiać
+        i wykorzystywać ponownie w innych miejscach projektu.
+      </p>
+
+      <div class="grid" aria-label="Zasady SOLID">
+        <article class="tile">
+          <span class="tile-icon">S</span>
+          <h3>Single Responsibility</h3>
+          <p>
+            Każdy Blueprint albo funkcja powinny robić jedną rzecz i robić ją dobrze.
+          </p>
+        </article>
+
+        <article class="tile">
+          <span class="tile-icon">O</span>
+          <h3>Open/Closed</h3>
+          <p>
+            Powinniśmy móc dodawać nowe zachowania bez przerabiania istniejącego, działającego kodu.
+          </p>
+        </article>
+
+        <article class="tile">
+          <span class="tile-icon">L</span>
+          <h3>Liskov Substitution</h3>
+          <p>
+            Gdy tworzymy nową klasę z klasy bazowej, powinna działać wszędzie tam, gdzie program spodziewa się klasy
+            bazowej, na przykład <code>Actor</code>.
+          </p>
+        </article>
+
+        <article class="tile">
+          <span class="tile-icon">I</span>
+          <h3>Interface Segregation</h3>
+          <p>
+            Lepiej mieć kilka małych, konkretnych interfejsów niż jeden ogromny, który wymusza implementowanie
+            niepotrzebnych funkcji.
+          </p>
+        </article>
+
+        <article class="tile">
+          <span class="tile-icon">D</span>
+          <h3>Dependency Inversion</h3>
+          <p>
+            Lepiej polegać na ogólnym kontrakcie, na przykład interface, niż na konkretnej klasie Blueprinta.
+          </p>
+        </article>
+      </div>
+
+      <p>
+        W Unreal Engine widzieliśmy już, co się dzieje, gdy tych zasad nie stosujemy: <code>BP_Field</code> przez
+        <code>Cast To</code> mocno zależy od <code>BP_TopDownCharacter</code>, więc trudno go użyć bez tej konkretnej
+        postaci. SOLID podpowiada, żeby taką zależność zastąpić czymś bardziej ogólnym.
+      </p>
+    </section>
+
+    <section class="section" id="funkcje">
+      <h2>Funkcje</h2>
+      <p class="lead">
+        Funkcja to nazwany fragment kodu, który wykonuje jedno konkretne zadanie i można go wywołać w wielu miejscach.
+        Dzięki temu Blueprint jest krótszy, czytelniejszy i łatwiejszy do poprawiania.
+      </p>
+
+      <div class="collision-panel">
+        <div class="collision-grid" aria-label="Najważniejsze cechy funkcji">
+          <article class="collision-card">
+            <h3><span class="collision-tag">1</span> Jedno zadanie</h3>
+            <p>
+              Dobra funkcja robi jedną rzecz, na przykład <code>OpenDoor</code>, <code>TakeDamage</code> albo
+              <code>OnFieldInteract</code>.
+            </p>
+          </article>
+
+          <article class="collision-card">
+            <h3><span class="collision-tag">2</span> Jedna poprawka</h3>
+            <p>
+              Jeśli logika jest w funkcji, poprawiamy ją w jednym miejscu zamiast szukać wielu skopiowanych node'ów.
+            </p>
+          </article>
+
+          <article class="collision-card">
+            <h3><span class="collision-tag">3</span> Dobra nazwa</h3>
+            <p>
+              Nazwa funkcji powinna mówić, co funkcja robi. To pomaga zrozumieć Blueprint nawet po kilku tygodniach.
+            </p>
+          </article>
+
+          <article class="collision-card">
+            <h3><span class="collision-tag">4</span> Zmienne lokalne</h3>
+            <p>
+              Zmienne lokalne istnieją tylko na czas wykonywania funkcji, więc nie zaśmiecają zmiennych całego
+              Blueprinta.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="komunikacja-miedzy-aktorami">
+      <h2>Komunikacja między aktorami</h2>
+      <p class="lead">
+        W Unreal Engine mamy trzy popularne sposoby komunikacji między aktorami: interface, Event Dispatcher
+        i Event Subsystem. Każdy z nich pomaga zmniejszyć zależność między Blueprintami.
+      </p>
+
+      <div class="grid" aria-label="Sposoby komunikacji między aktorami">
+        <article class="tile">
+          <span class="tile-icon">I</span>
+          <h3>Interface</h3>
+          <p>
+            Działa jak wspólna umowa. Aktor może wywołać funkcję na innym obiekcie, jeśli ten obiekt implementuje
+            dany interface, bez robienia <code>Cast To</code> do konkretnej klasy.
+          </p>
+        </article>
+
+        <article class="tile">
+          <span class="tile-icon">E</span>
+          <h3>Event Dispatcher</h3>
+          <p>
+            Działa jak sygnał. Jeden aktor ogłasza, że coś się wydarzyło, a inne obiekty podpięte do tego eventu
+            mogą zareagować.
+          </p>
+        </article>
+
+        <article class="tile">
+          <span class="tile-icon">S</span>
+          <h3>Event Subsystem</h3>
+          <p>
+            To centralne miejsce do wysyłania i odbierania zdarzeń w większym systemie gry. Jest wygodne przy
+            rozbudowanych projektach, ale wymaga przygotowania własnej implementacji w C++.
+          </p>
+        </article>
+      </div>
+
+      <p>
+        W tej lekcji skupiamy się na interface. To dobre rozwiązanie do interakcji typu: użyj, podnieś, otwórz
+        albo zadaj obrażenia.
+      </p>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg8_ex8.png" alt="Tworzenie Blueprint Interface BPI_GardeningCertificate.">
+        <figcaption>
+          Tworzymy interface <code>BPI_GardeningCertificate</code>. Możemy potraktować go jak certyfikat ogrodnika:
+          aktor z tym interfejsem deklaruje, że potrafi wykonać konkretne akcje.
+        </figcaption>
+      </figure>
+
+      <p>
+        Do <code>BPI_GardeningCertificate</code> dodajemy funkcję <code>OnFieldInteract</code>. W interfejsie nie
+        wpisujemy zachowania tej funkcji. To tylko lista funkcji, które musi posiadać aktor korzystający z tego
+        interfejsu.
+      </p>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg8_ex9.png" alt="Dodanie interfejsu BPI_GardeningCertificate w Class Settings BP_TopDownCharacter.">
+        <figcaption>
+          W <strong>Class Settings</strong> przypisujemy interface do <code>BP_TopDownCharacter</code>.
+        </figcaption>
+      </figure>
+
+      <details class="script-drawer">
+        <summary><span class="script-icon">BP</span> BP_Field</summary>
+        <div class="ue-blueprint-viewer" data-blueprint-viewer data-blueprint-title="BP_Field" data-bp-viewport-image="ktg_assets/bp/ktg8_bp_field_view.png">
+          <button type="button" class="ue-blueprint-expand-button" data-bp-open-modal aria-label="Otwórz Blueprint na całą szerokość" title="Otwórz na całą szerokość">[]</button>
+
+          <aside class="ue-blueprint-sidebar" aria-label="Panel Blueprint BP_Field">
+            <section class="ue-panel">
+              <div class="ue-panel-title"><span>Components</span></div>
+              <div class="ue-tree" data-bp-components>
+                <div class="ue-tree-item" data-icon="BP" data-title="BP_Field (Self)">
+                  <div class="ue-tree-item" data-icon="C" data-title="DefaultSceneRoot">
+                    <div class="ue-tree-item" data-icon="M" data-title="Cube" data-meta="Mesh">
+                      <div class="ue-tree-item" data-icon="B" data-title="Box" data-meta="Box Collision"></div>
+                      <div class="ue-tree-item" data-icon="M" data-title="plant1" data-meta="Mesh"></div>
+                      <div class="ue-tree-item" data-icon="M" data-title="plant2" data-meta="Mesh"></div>
+                      <div class="ue-tree-item" data-icon="M" data-title="plant3" data-meta="Mesh"></div>
+                      <div class="ue-tree-item" data-icon="M" data-title="plant4" data-meta="Mesh"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="ue-panel">
+              <div class="ue-panel-title"><span>My Blueprint</span></div>
+              <div class="ue-section-label">GRAPHS</div>
+              <button class="ue-tree-item is-active" type="button" data-icon="G" data-title="EventGraph" data-blueprint-view="eventGraph" data-bp-label="EventGraph" data-bp-image="ktg_assets/bp/ktg8_bp_field_event_graph.png"></button>
+            </section>
+          </aside>
+
+          <section class="ue-blueprint-main" aria-label="Podgląd Blueprint BP_Field">
+            <div class="ue-tabs" data-bp-tabs></div>
+            <div class="ue-toolbar">
+              <div class="ue-breadcrumb">
+                <span>BP_Field</span>
+                <span>&gt;</span>
+                <strong data-bp-title>EventGraph</strong>
+              </div>
+              <div class="ue-zoom-controls">
+                <button type="button" data-bp-zoom-out aria-label="Pomniejsz">-</button>
+                <button type="button" data-bp-zoom-reset aria-label="Resetuj przybliżenie">100%</button>
+                <button type="button" data-bp-zoom-in aria-label="Powiększ">+</button>
+              </div>
+            </div>
+            <div class="ue-graph-stage" data-bp-stage>
+              <div class="ue-graph-content" data-bp-content></div>
+            </div>
+          </section>
+        </div>
+      </details>
+
+      <details class="script-drawer">
+        <summary><span class="script-icon">BP</span> BP_TopDownCharacter</summary>
+        <div class="ue-blueprint-viewer" data-blueprint-viewer data-blueprint-title="BP_TopDownCharacter" data-bp-viewport-image="ktg_assets/bp/ktg6_bp_top_down_character_view.png">
+          <button type="button" class="ue-blueprint-expand-button" data-bp-open-modal aria-label="Otwórz Blueprint na całą szerokość" title="Otwórz na całą szerokość">[]</button>
+
+          <aside class="ue-blueprint-sidebar" aria-label="Panel Blueprint BP_TopDownCharacter">
+            <section class="ue-panel">
+              <div class="ue-panel-title"><span>Components</span></div>
+              <div class="ue-tree" data-bp-components>
+                <div class="ue-tree-item" data-icon="BP" data-title="BP_TopDownCharacter (Self)">
+                  <div class="ue-tree-item" data-icon="C" data-title="DefaultSceneRoot">
+                    <div class="ue-tree-item" data-icon="C" data-title="Capsule Component">
+                      <div class="ue-tree-item" data-icon="A" data-title="Arrow Component"></div>
+                      <div class="ue-tree-item" data-icon="M" data-title="Mesh"></div>
+                      <div class="ue-tree-item" data-icon="S" data-title="SpringArm">
+                        <div class="ue-tree-item" data-icon="C" data-title="Camera"></div>
+                      </div>
+                    </div>
+                    <div class="ue-tree-item" data-icon="M" data-title="Character Movement"></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="ue-panel">
+              <div class="ue-panel-title"><span>My Blueprint</span></div>
+              <div class="ue-section-label">GRAPHS</div>
+              <button class="ue-tree-item is-active" type="button" data-icon="G" data-title="EventGraph" data-blueprint-view="eventGraph" data-bp-label="EventGraph" data-bp-image="ktg_assets/bp/ktg8_bp_top_down_character_event_graph.png"></button>
+              <div class="ue-section-label">FUNCTIONS</div>
+              <button class="ue-tree-item" type="button" data-icon="F" data-title="equip" data-blueprint-view="equip" data-bp-label="equip" data-bp-image="ktg_assets/bp/ktg8_bp_top_down_character_equip.png"></button>
+              <button class="ue-tree-item" type="button" data-icon="F" data-title="unequip" data-blueprint-view="unequip" data-bp-label="unequip" data-bp-image="ktg_assets/bp/ktg8_bp_top_down_character_unequip.png"></button>
+            </section>
+          </aside>
+
+          <section class="ue-blueprint-main" aria-label="Podgląd Blueprint BP_TopDownCharacter">
+            <div class="ue-tabs" data-bp-tabs></div>
+            <div class="ue-toolbar">
+              <div class="ue-breadcrumb">
+                <span>BP_TopDownCharacter</span>
+                <span>&gt;</span>
+                <strong data-bp-title>EventGraph</strong>
+              </div>
+              <div class="ue-zoom-controls">
+                <button type="button" data-bp-zoom-out aria-label="Pomniejsz">-</button>
+                <button type="button" data-bp-zoom-reset aria-label="Resetuj przybliżenie">100%</button>
+                <button type="button" data-bp-zoom-in aria-label="Powiększ">+</button>
+              </div>
+            </div>
+            <div class="ue-graph-stage" data-bp-stage>
+              <div class="ue-graph-content" data-bp-content></div>
+            </div>
+          </section>
+        </div>
+      </details>
+
+      <p>
+        Nie zmieniając zachowania, zmniejszyliśmy znacznie <code>BP_Field</code> i nie zwiększyliśmy
+        <code>BP_TopDownCharacter</code>. To dobry przykład optymalizacji przez mniejsze zależności, a nie przez
+        magiczne ustawienie w edytorze.
+      </p>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg8_ex10.png" alt="Size Map po ograniczeniu zależności między BP_Field i BP_TopDownCharacter.">
+        <figcaption>
+          Po usunięciu mocnej zależności <code>BP_Field</code> jest lżejszy i łatwiejszy do ponownego użycia.
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="quiz">
+      <h2>Quiz</h2>
+
+      <div class="quiz" data-quiz aria-label="Quiz z optymalizacji w Unreal Engine">
+        <div class="quiz-question">
+          <p>1. Do czego służy Print String?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-correct="true">Do wypisania tekstu albo wartości zmiennej podczas działania gry.</button>
+            <button class="quiz-option" type="button">Do kompresowania tekstur.</button>
+            <button class="quiz-option" type="button">Do automatycznego tworzenia nowych map.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>2. Co robi Breakpoint?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Rysuje kolizję w świecie gry.</button>
+            <button class="quiz-option" type="button" data-correct="true">Zatrzymuje Blueprint w wybranym miejscu, żeby sprawdzić jego stan krok po kroku.</button>
+            <button class="quiz-option" type="button">Zmienia klasę aktora na inną.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>3. Kiedy przydaje się Draw Debug?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Gdy chcemy zmienić ikonę folderu.</button>
+            <button class="quiz-option" type="button" data-correct="true">Gdy chcemy zobaczyć trace, zasięg, punkt trafienia albo inny niewidoczny element logiki.</button>
+            <button class="quiz-option" type="button">Gdy chcemy wyeksportować film z Sequencera.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>4. Co pokazuje Reference View?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-correct="true">Zależności między assetami w projekcie.</button>
+            <button class="quiz-option" type="button">Tylko liczbę klatek na sekundę.</button>
+            <button class="quiz-option" type="button">Wyłącznie ustawienia materiału.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>5. Co pokazuje Size Map?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Listę graczy podłączonych do serwera.</button>
+            <button class="quiz-option" type="button">Układ klawiszy na klawiaturze.</button>
+            <button class="quiz-option" type="button" data-correct="true">Rozmiar assetu razem z powiązanymi zasobami.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>6. Dlaczego zbyt dużo <code>Cast To</code> może być problemem?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-correct="true">Bo tworzy mocne zależności od konkretnych klas i utrudnia ponowne użycie Blueprintów.</button>
+            <button class="quiz-option" type="button">Bo zawsze usuwa komponent kolizji.</button>
+            <button class="quiz-option" type="button">Bo blokuje działanie Print String.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>7. Co oznacza zasada Single Responsibility?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Każdy Blueprint powinien mieć jak najwięcej różnych zadań.</button>
+            <button class="quiz-option" type="button" data-correct="true">Blueprint albo funkcja powinny robić jedną rzecz i robić ją dobrze.</button>
+            <button class="quiz-option" type="button">Każdy asset powinien mieć jedną teksturę.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>8. Po co tworzymy funkcje?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-correct="true">Żeby nazwać fragment logiki, używać go w wielu miejscach i poprawiać w jednym miejscu.</button>
+            <button class="quiz-option" type="button">Żeby ukryć wszystkie błędy przed edytorem.</button>
+            <button class="quiz-option" type="button">Żeby zamienić Blueprint na teksturę.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>9. Jak działa interface w Unreal Engine?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Jest osobnym poziomem gry.</button>
+            <button class="quiz-option" type="button" data-correct="true">Jest umową z listą funkcji, które mogą być wywołane bez castowania do konkretnej klasy.</button>
+            <button class="quiz-option" type="button">Jest narzędziem tylko do animacji twarzy.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>10. Czym różni się Event Dispatcher od interface?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Event Dispatcher usuwa wszystkie zależności z projektu automatycznie.</button>
+            <button class="quiz-option" type="button">Event Dispatcher działa tylko w C++.</button>
+            <button class="quiz-option" type="button" data-correct="true">Event Dispatcher wysyła sygnał, do którego inne obiekty mogą się podpiąć i zareagować.</button>
+          </div>
+        </div>
+
+        <div class="quiz-result" aria-live="polite">
+          Wynik: <span data-quiz-score>0</span>/<span data-quiz-total>10</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="zadanie">
+      <h2>Zadanie</h2>
+      <p class="lead">
+        Rozszerz nasz certyfikat ogrodnika o dodatkowe umiejętności.
+      </p>
+
+      <ol class="steps">
+        <li>Dodaj do <code>BPI_GardeningCertificate</code> nową funkcję, na przykład <code>OnWateringCanInteract</code>.</li>
+        <li>Zaimplementuj tę funkcję w <code>BP_TopDownCharacter</code>.</li>
+        <li>Sprawdź w Reference View i Size Map, czy nowa komunikacja nie dodała niepotrzebnych mocnych zależności.</li>
+      </ol>
+    </section>
+  </main>
+
+  <script src="js/course-page.js" defer></script>
+</body>
+</html>
