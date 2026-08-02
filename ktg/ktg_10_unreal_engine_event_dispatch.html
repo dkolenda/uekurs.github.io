@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unreal Engine - mechanika cz. 3</title>
+  <link rel="stylesheet" href="css/course-page.css">
+</head>
+<body>
+  <nav class="right-nav" aria-label="Nawigacja po rozdziałach">
+    <strong>Rozdziały</strong>
+    <a href="#streszczenie">Streszczenie</a>
+    <a href="#zmienne-publiczne">Zmienne publiczne</a>
+    <a href="#warianty-zmiennych">Warianty zmiennych</a>
+    <a href="#listy">Listy</a>
+    <a href="#event-dispatchers">Event Dispatchers</a>
+    <a href="#zagadka">Zagadka</a>
+    <a href="#quiz">Quiz</a>
+    <a href="#zadanie">Zadanie</a>
+  </nav>
+
+  <main>
+    <header class="hero">
+      <p class="eyebrow">Unreal Engine - materiały dla kursantów</p>
+      <h1>Unreal Engine - mechanika cz. 3</h1>
+    </header>
+
+    <section class="intro-card" id="streszczenie">
+      <h2>Streszczenie</h2>
+      <p>
+        Na dzisiejszych zajęciach poznajemy zmienne publiczne, różne sposoby przechowywania danych oraz komunikację
+        między Blueprintami za pomocą Event Dispatcherów. Na koniec wykorzystujemy te elementy w prostej zagadce
+        z płytami naciskowymi i przejściem otwieranym po wykonaniu poprawnej sekwencji.
+      </p>
+    </section>
+
+    <section class="section" id="zmienne-publiczne">
+      <h2>Zmienne publiczne</h2>
+      <p class="lead">
+        W Unreal Engine zmienną w Blueprintcie możemy ustawić jako publiczną, czyli edytowalną dla konkretnego aktora
+        postawionego już na scenie. Po zaznaczeniu takiego aktora wartość zmiennej pojawia się w panelu
+        <strong>Details</strong> i można ją zmienić bez otwierania Blueprinta.
+      </p>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg10_ex2.png" alt="Przykład zmiennej publicznej widocznej w panelu Details Unreal Engine.">
+        <figcaption>
+          Po zaznaczeniu aktora na scenie publiczna zmienna pojawia się w panelu <strong>Details</strong>.
+        </figcaption>
+      </figure>
+      <br/>
+      <p>
+        Dzięki temu jeden Blueprint może działać w wielu wariantach. Przykładowo tworzymy jeden Blueprint drzwi,
+        a nazwę wymaganego klucza ustawiamy jako zmienną publiczną. Po wstawieniu kilku drzwi na scenę każde z nich
+        może wymagać innego klucza: jedne <code>RedKey</code>, drugie <code>BlueKey</code>, a trzecie
+        <code>BossKey</code>. Nie musimy kopiować Blueprinta ani tworzyć osobnej klasy dla każdych drzwi.
+      </p>
+
+      <p>
+        Zmienne publiczne przydają się szczególnie wtedy, gdy logika działania obiektu jest taka sama, ale różnią się
+        szczegóły: liczba punktów życia przeciwnika, prędkość platformy, kolor światła, nazwa klucza, tekst na tabliczce
+        albo czas, po którym pułapka ponownie się aktywuje.
+      </p>
+    </section>
+
+    <section class="section" id="warianty-zmiennych">
+      <h2>Warianty zmiennych</h2>
+      <p class="lead">
+        W Blueprintach zmienna może przechowywać jedną wartość albo większy zestaw danych. Najczęściej spotkamy trzy
+        podstawowe warianty:
+      </p>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg10_ex4.png" alt="Ilustracja porównująca Single jako jedną wartość, Array jako wiele wartości w kolejności i Map jako pary klucz wartość.">
+        <figcaption>
+          Single przechowuje jedną wartość, Array wiele wartości w kolejności, a Map łączy klucz z konkretną wartością.
+        </figcaption>
+      </figure>
+
+      <div class="variable-grid variable-kind-list" aria-label="Podstawowe warianty przechowywania danych">
+        <article class="variable-card var-bool">
+          <h3>Single</h3>
+          <p>
+            Zwykła zmienna przechowująca jedną wartość, np. jedną liczbę, jeden tekst, jednego aktora albo jedną
+            wartość <code>true/false</code>. Używamy jej, gdy potrzebujemy zapamiętać dokładnie jedną rzecz, np.
+            <code>DoorIsOpen</code>, <code>PlayerHealth</code> albo <code>RequiredKeyName</code>.
+          </p>
+        </article>
+
+        <article class="variable-card var-actor">
+          <h3>Array</h3>
+          <p>
+            Lista wielu wartości tego samego typu. Sprawdza się, gdy elementów może być kilka lub kilkadziesiąt,
+            np. lista posiadanych kluczy, lista przeciwników na arenie, lista punktów spawnu albo lista płyt
+            naciskowych w zagadce.
+          </p>
+        </article>
+
+        <article class="variable-card var-text">
+          <h3>Map</h3>
+          <p>
+            Zbiór par <code>klucz -&gt; wartość</code>. Mapy używamy wtedy, gdy chcemy szybko znaleźć wartość po jej
+            nazwie lub identyfikatorze, np. <code>NazwaPrzedmiotu -&gt; Ilość</code>,
+            <code>NazwaKlucza -&gt; CzyPosiadany</code> albo <code>TypPrzeciwnika -&gt; PunktyZaPokonanie</code>.
+          </p>
+        </article>
+      </div>
+
+      <div class="callout curiosity">
+        <span class="callout-icon" aria-label="Informacja" title="Informacja">i</span>
+        <span>
+          Dobór wariantu zmiennej zależy od pytania, na które ma odpowiadać Blueprint. Jeśli pytamy „czy drzwi są
+          otwarte?”, wystarczy <code>Single</code>. Jeśli pytamy „jakie klucze ma gracz?”, lepsza będzie
+          <code>Array</code>. Jeśli pytamy „ile sztuk każdego przedmiotu ma gracz?”, wygodniejsza będzie
+          <code>Map</code>.
+        </span>
+      </div>
+    </section>
+
+    <section class="section" id="listy">
+      <h2>Listy</h2>
+      <p class="lead">
+        Array, czyli lista, pozwala przechowywać wiele wartości jednego typu w jednej zmiennej. To bardzo przydatne
+        np. przy ekwipunku, gdzie chcemy zapisać listę nazw przedmiotów posiadanych przez bohatera.
+      </p>
+
+      <div class="blue-info">
+        <div class="shortcut-row" aria-label="Indeksowanie listy">
+          <div class="shortcut">
+            <div class="keyline"><kbd>0</kbd></div>
+            <span class="shortcut-desc"><strong>Pierwszy element</strong> Listy w Unreal Engine zaczynają się od zera.</span>
+          </div>
+
+          <div class="shortcut">
+            <div class="keyline"><kbd>1</kbd></div>
+            <span class="shortcut-desc"><strong>Drugi element</strong> Indeks mówi, które miejsce na liście wybieramy.</span>
+          </div>
+
+          <div class="shortcut">
+            <div class="keyline"><kbd>2</kbd></div>
+            <span class="shortcut-desc"><strong>Trzeci element</strong> O jeden mniej niż zwykłe liczenie na palcach.</span>
+          </div>
+        </div>
+      </div>
+
+      <p>
+        To oznacza, że pierwszy element listy ma indeks <code>0</code>, a nie <code>1</code>. Jest to częste źródło
+        pomyłek, dlatego przy węźle <strong>Get</strong> zawsze warto sprawdzić, czy podajemy właściwy numer elementu.
+      </p>
+
+      <div class="grid list-methods" aria-label="Przydatne operacje na listach">
+        <article class="tile">
+          <h3>Add</h3>
+          <figure class="method-node-figure">
+            <img src="ktg_assets/img/nodes/ktg10_node_array_add.png" alt="Węzeł Add Item dla tablicy w Blueprintach Unreal Engine.">
+          </figure>
+          <p>Dodaje nowy element na koniec listy.</p>
+        </article>
+
+        <article class="tile">
+          <h3>Length</h3>
+          <figure class="method-node-figure">
+            <img src="ktg_assets/img/nodes/ktg10_node_array_length.png" alt="Węzeł Length zwracający liczbę elementów tablicy w Blueprintach Unreal Engine.">
+          </figure>
+          <p>Zwraca liczbę elementów znajdujących się aktualnie na liście.</p>
+        </article>
+
+        <article class="tile">
+          <h3>Remove Index</h3>
+          <figure class="method-node-figure">
+            <img src="ktg_assets/img/nodes/ktg10_node_array_remove_index.png" alt="Węzeł Remove Index usuwający element tablicy po indeksie w Blueprintach Unreal Engine.">
+          </figure>
+          <p>
+            Usuwa element o wybranym indeksie. Po usunięciu elementu kolejne elementy przesuwają się, więc ich indeksy
+            mogą się zmienić.
+          </p>
+        </article>
+
+        <article class="tile">
+          <h3>Get</h3>
+          <figure class="method-node-figure">
+            <img src="ktg_assets/img/nodes/ktg10_node_array_get.png" alt="Węzeł Get pobierający element tablicy po indeksie w Blueprintach Unreal Engine.">
+          </figure>
+          <p>
+            Pobiera element z listy na podstawie indeksu. Węzeł występuje w wersji <strong>copy</strong> i
+            <strong>ref</strong>. Wersja <strong>copy</strong> pobiera kopię wartości, więc późniejsza zmiana tej kopii
+            nie zmienia oryginalnego elementu na liście. Wersja <strong>ref</strong> daje bezpośrednie odwołanie do
+            elementu na liście, więc modyfikacja tej wartości może zmienić zawartość listy.
+          </p>
+        </article>
+
+        <article class="tile">
+          <h3>For Each Loop</h3>
+          <figure class="method-node-figure">
+            <img src="ktg_assets/img/nodes/ktg10_node_for_each_loop_only.png" alt="Samodzielny węzeł For Each Loop w Blueprintach Unreal Engine.">
+          </figure>
+          <p>
+            Wykonuje tę samą akcję dla każdego elementu listy, po kolei, od pierwszego do ostatniego. Używamy go
+            np. wtedy, gdy chcemy sprawdzić, czy dany przedmiot znajduje się w ekwipunku, wypisać wszystkie elementy
+            listy na ekranie albo stworzyć grupę przeciwników w kilku punktach spawnu.
+          </p>
+        </article>
+      </div>
+
+      <div class="callout mistake">
+        <span class="callout-icon" aria-label="Ostrzeżenie" title="Ostrzeżenie">!</span>
+        <span>
+          <strong>Get (ref)</strong> bywa użyteczne, ale może powodować trudne błędy. Jeśli dwa eventy pracują na tej
+          samej liście i jeden z nich zmieni element w trakcie działania drugiego, wynik może być zaskakujący.
+          Wersja <strong>copy</strong> jest zwykle bezpieczniejsza i czytelniejsza, choć przy bardzo dużych danych może
+          zużywać więcej pamięci.
+        </span>
+      </div>
+
+      <p>
+        Listy są szczególnie wygodne przy zagadkach opartych na kolejności. Możemy mieć jedną listę z poprawną
+        sekwencją płyt naciskowych i drugą listę z tym, co nacisnął gracz. Następnie porównujemy obie listy
+        i sprawdzamy, czy gracz wykonał zadanie poprawnie.
+      </p>
+    </section>
+
+    <section class="section" id="event-dispatchers">
+      <h2>Komunikacja między Blueprintami - Event Dispatchers</h2>
+      <p class="lead">
+        Event Dispatcher pozwala jednemu Blueprintowi ogłosić, że coś się wydarzyło, a innym Blueprintom zareagować
+        na ten sygnał. Można porównać go do radia: jeden obiekt nadaje komunikat, a inne obiekty, które wcześniej
+        zaczęły nasłuchiwać, wykonują swoje akcje, gdy ten komunikat się pojawi.
+      </p>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg10_ex3.png" alt="Schemat komunikacji Blueprintów za pomocą Event Dispatchera.">
+        <figcaption>
+          Jeden obiekt nadaje komunikat, a obiekty wcześniej podpięte do tego sygnału wykonują swoją reakcję.
+        </figcaption>
+      </figure>
+
+      <p>
+        Przykład: płyta naciskowa ma Event Dispatcher <code>OnPressed</code>. Kiedy gracz na nią wejdzie, płyta
+        wywołuje dispatcher. Drzwi albo osobny Blueprint zarządzający zagadką mogą nasłuchiwać tego zdarzenia
+        i zareagować: zapisać naciśniętą płytę, sprawdzić kolejność albo otworzyć przejście.
+      </p>
+
+      <div class="grid" aria-label="Najważniejsze role przy Event Dispatcherach">
+        <article class="tile">
+          <span class="tile-icon">N</span>
+          <h3>Nadawca</h3>
+          <p>
+            Obiekt, który ma dispatcher i wywołuje sygnał, na przykład <code>BP_FloorButton</code>.
+          </p>
+        </article>
+
+        <article class="tile">
+          <span class="tile-icon">S</span>
+          <h3>Sygnał</h3>
+          <p>
+            Nazwane zdarzenie, np. <code>OnPressed</code>, <code>OnReleased</code>, <code>OnDoorOpened</code>
+            i <code>OnPuzzleSolved</code>.
+          </p>
+        </article>
+
+        <article class="tile">
+          <span class="tile-icon">O</span>
+          <h3>Odbiorca</h3>
+          <p>
+            Blueprint, który podłącza się do sygnału i reaguje, gdy nadawca go wywoła.
+          </p>
+        </article>
+      </div>
+
+      <div class="callout curiosity">
+        <span class="callout-icon" aria-label="Informacja" title="Informacja">i</span>
+        <span>
+          Jeden Blueprint może mieć wiele Event Dispatcherów, np. <code>OnPressed</code>, <code>OnReleased</code>,
+          <code>OnDoorOpened</code> i <code>OnPuzzleSolved</code>. Może też nasłuchiwać wielu zdarzeń pochodzących od
+          innych obiektów. Dzięki temu obiekty nie muszą stale sprawdzać, co dzieje się w świecie gry. Zamiast tego
+          reagują dopiero wtedy, gdy dostaną konkretny sygnał.
+        </span>
+      </div>
+
+      <div class="callout mistake">
+        <span class="callout-icon" aria-label="Ostrzeżenie" title="Ostrzeżenie">!</span>
+        <span>
+          Aby podpiąć się do Event Dispatchera, zwykle potrzebujemy referencji do konkretnego aktora, którego chcemy
+          nasłuchiwać. Jeśli drzwi mają reagować na płytę naciskową, muszą wiedzieć, o którą płytę chodzi. Taką
+          referencję można np. ustawić jako zmienną publiczną w panelu <strong>Details</strong> albo znaleźć aktora
+          w świecie gry, co bywa kosztowne.
+        </span>
+      </div>
+    </section>
+
+    <section class="section" id="zagadka">
+      <h2>Zagadka</h2>
+      <p class="lead">
+        Stworzymy prostą zagadkę: na podłodze znajdują się trzy płyty naciskowe, a gracz musi nadepnąć na nie
+        we właściwej kolejności, aby otworzyć przejście.
+      </p>
+
+      <figure class="media-card">
+        <img src="ktg_assets/img/ktg10_ex1.gif" alt="Animacja pokazująca zagadkę z płytami naciskowymi w Unreal Engine.">
+        <figcaption>
+          Gracz naciska płyty po kolei. Blueprint zarządzający zapamiętuje wybraną sekwencję i sprawdza, czy zgadza się
+          z poprawnym kodem.
+        </figcaption>
+      </figure>
+
+      <div class="collision-panel">
+        <div class="collision-grid" aria-label="Logika zagadki z płytami">
+          <article class="collision-card">
+            <h3><span class="collision-tag">1</span> Płyta nadaje sygnał</h3>
+            <p>
+              <code>BP_FloorButton</code> wykrywa wejście gracza i wywołuje dispatcher z nazwą przycisku.
+            </p>
+          </article>
+
+          <article class="collision-card">
+            <h3><span class="collision-tag">2</span> Manager zapisuje wybór</h3>
+            <p>
+              <code>BP_PuzzelMenager</code> dopisuje naciśniętą płytę do listy <code>pressedButtons</code>.
+            </p>
+          </article>
+
+          <article class="collision-card">
+            <h3><span class="collision-tag">3</span> Lista jest porównywana</h3>
+            <p>
+              Gdy liczba naciśnięć jest wystarczająca, manager porównuje wybory z <code>correctButtonsKeyCode</code>.
+            </p>
+          </article>
+
+          <article class="collision-card">
+            <h3><span class="collision-tag">4</span> Drzwi reagują</h3>
+            <p>
+              Jeśli kolejność jest poprawna, wskazany aktor <code>door</code> może uruchomić animację albo ukryć blokadę.
+            </p>
+          </article>
+        </div>
+      </div>
+
+      <details class="script-drawer">
+        <summary><span class="script-icon">BP</span> BP_FloorButton</summary>
+        <div class="ue-blueprint-viewer" data-blueprint-viewer data-blueprint-title="BP_FloorButton" data-bp-viewport-image="ktg_assets/bp/ktg10_bp_floorbutton_view.png">
+          <button type="button" class="ue-blueprint-expand-button" data-bp-open-modal aria-label="Otwórz Blueprint na całą szerokość" title="Otwórz na całą szerokość">[]</button>
+
+          <aside class="ue-blueprint-sidebar" aria-label="Panel Blueprint BP_FloorButton">
+            <section class="ue-panel">
+              <div class="ue-panel-title"><span>Components</span></div>
+              <div class="ue-tree" data-bp-components>
+                <div class="ue-tree-item" data-icon="BP" data-title="BP_FloorButton (Self)">
+                  <div class="ue-tree-item" data-icon="C" data-title="DefaultSceneRoot">
+                    <div class="ue-tree-item" data-icon="M" data-title="Cube" data-meta="Mesh">
+                      <div class="ue-tree-item" data-icon="B" data-title="Box" data-meta="Box Collision"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="ue-panel">
+              <div class="ue-panel-title"><span>My Blueprint</span></div>
+              <div class="ue-section-label">GRAPHS</div>
+              <button class="ue-tree-item is-active" type="button" data-icon="G" data-title="EventGraph" data-blueprint-view="eventGraph" data-bp-label="EventGraph" data-bp-image="ktg_assets/bp/ktg10_bp_floorbutton_event_graph.png"></button>
+
+              <div class="ue-section-label">VARIABLES</div>
+              <div class="ue-tree" data-bp-variables>
+                <div class="ue-tree-item" data-icon="V" data-title="name" data-bp-variable-type="name" data-bp-public="true"></div>
+              </div>
+            </section>
+          </aside>
+
+          <section class="ue-blueprint-main" aria-label="Podgląd Blueprint BP_FloorButton">
+            <div class="ue-tabs" data-bp-tabs></div>
+            <div class="ue-toolbar">
+              <div class="ue-breadcrumb">
+                <span>BP_FloorButton</span>
+                <span>&gt;</span>
+                <strong data-bp-title>EventGraph</strong>
+              </div>
+              <div class="ue-zoom-controls">
+                <button type="button" data-bp-zoom-out aria-label="Pomniejsz">-</button>
+                <button type="button" data-bp-zoom-reset aria-label="Resetuj przybliżenie">100%</button>
+                <button type="button" data-bp-zoom-in aria-label="Powiększ">+</button>
+              </div>
+            </div>
+            <div class="ue-graph-stage" data-bp-stage>
+              <div class="ue-graph-content" data-bp-content></div>
+            </div>
+          </section>
+        </div>
+      </details>
+
+      <details class="script-drawer">
+        <summary><span class="script-icon">BP</span> BP_PuzzelMenager</summary>
+        <div class="ue-blueprint-viewer" data-blueprint-viewer data-blueprint-title="BP_PuzzelMenager">
+          <button type="button" class="ue-blueprint-expand-button" data-bp-open-modal aria-label="Otwórz Blueprint na całą szerokość" title="Otwórz na całą szerokość">[]</button>
+
+          <aside class="ue-blueprint-sidebar" aria-label="Panel Blueprint BP_PuzzelMenager">
+            <section class="ue-panel">
+              <div class="ue-panel-title"><span>Components</span></div>
+              <div class="ue-tree" data-bp-components>
+                <div class="ue-tree-item" data-icon="BP" data-title="BP_PuzzelMenager (Self)">
+                  <div class="ue-tree-item" data-icon="C" data-title="DefaultSceneRoot">
+                    <div class="ue-tree-item" data-icon="B" data-title="Billboard" data-meta="Editor icon"></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="ue-panel">
+              <div class="ue-panel-title"><span>My Blueprint</span></div>
+              <div class="ue-section-label">GRAPHS</div>
+              <button class="ue-tree-item is-active" type="button" data-icon="G" data-title="EventGraph" data-blueprint-view="eventGraph" data-bp-label="EventGraph" data-bp-image="ktg_assets/bp/ktg10_bp_puzzel_menager_event_graph.png"></button>
+              <button class="ue-tree-item" type="button" data-icon="G" data-title="Podpięcie przycisków" data-blueprint-view="bindButtons" data-bp-label="Podpięcie przycisków" data-bp-image="ktg_assets/bp/ktg10_bp_puzzel_menager_event_graph_1.png"></button>
+              <button class="ue-tree-item" type="button" data-icon="G" data-title="Sprawdzenie sekwencji" data-blueprint-view="checkSequence" data-bp-label="Sprawdzenie sekwencji" data-bp-image="ktg_assets/bp/ktg10_bp_puzzel_menager_event_graph_2.png"></button>
+              <button class="ue-tree-item" type="button" data-icon="G" data-title="Reset i sukces" data-blueprint-view="resetSuccess" data-bp-label="Reset i sukces" data-bp-image="ktg_assets/bp/ktg10_bp_puzzel_menager_event_graph_3.png"></button>
+
+              <div class="ue-section-label">VARIABLES</div>
+              <div class="ue-tree" data-bp-variables>
+                <div class="ue-tree-item" data-icon="V" data-title="buttons" data-bp-variable-type="object" data-bp-variable-label="Array&lt;BP_FloorButton&gt;" data-bp-public="true"></div>
+                <div class="ue-tree-item" data-icon="V" data-title="pressedButtons" data-bp-variable-type="name" data-bp-variable-label="Array&lt;Name&gt;"></div>
+                <div class="ue-tree-item" data-icon="V" data-title="correctButtonsKeyCode" data-bp-variable-type="name" data-bp-variable-label="Array&lt;Name&gt;"></div>
+                <div class="ue-tree-item" data-icon="V" data-title="door" data-bp-variable-type="actor" data-bp-public="true"></div>
+              </div>
+            </section>
+          </aside>
+
+          <section class="ue-blueprint-main" aria-label="Podgląd Blueprint BP_PuzzelMenager">
+            <div class="ue-tabs" data-bp-tabs></div>
+            <div class="ue-toolbar">
+              <div class="ue-breadcrumb">
+                <span>BP_PuzzelMenager</span>
+                <span>&gt;</span>
+                <strong data-bp-title>EventGraph</strong>
+              </div>
+              <div class="ue-zoom-controls">
+                <button type="button" data-bp-zoom-out aria-label="Pomniejsz">-</button>
+                <button type="button" data-bp-zoom-reset aria-label="Resetuj przybliżenie">100%</button>
+                <button type="button" data-bp-zoom-in aria-label="Powiększ">+</button>
+              </div>
+            </div>
+            <div class="ue-graph-stage" data-bp-stage>
+              <div class="ue-graph-content" data-bp-content></div>
+            </div>
+          </section>
+        </div>
+      </details>
+    </section>
+
+    <section class="section" id="quiz">
+      <h2>Quiz</h2>
+
+      <div class="quiz" data-quiz aria-label="Quiz z mechaniki i Event Dispatcherów w Unreal Engine">
+        <div class="quiz-question">
+          <p>1. Do czego służy zmienna publiczna w Blueprintcie?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-correct="true">Do ustawiania wartości dla konkretnego aktora na scenie w panelu Details.</button>
+            <button class="quiz-option" type="button">Do automatycznego usuwania Blueprinta po uruchomieniu gry.</button>
+            <button class="quiz-option" type="button">Do zamiany każdego aktora w zmienną globalną.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>2. Kiedy warto użyć <code>Array</code>?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Gdy zawsze potrzebujemy dokładnie jednej wartości.</button>
+            <button class="quiz-option" type="button" data-correct="true">Gdy chcemy przechować wiele wartości tego samego typu, na przykład listę kluczy.</button>
+            <button class="quiz-option" type="button">Gdy chcemy stworzyć materiał na siatce 3D.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>3. Od jakiego indeksu zaczyna się numerowanie elementów na liście?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-correct="true">Od <code>0</code>.</button>
+            <button class="quiz-option" type="button">Od <code>1</code>.</button>
+            <button class="quiz-option" type="button">Od liczby elementów na liście.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>4. Co robi węzeł <code>Length</code> dla listy?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Usuwa ostatni element listy.</button>
+            <button class="quiz-option" type="button" data-correct="true">Zwraca liczbę elementów znajdujących się aktualnie na liście.</button>
+            <button class="quiz-option" type="button">Zamienia listę na mapę.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>5. Czym różni się <code>Get (copy)</code> od <code>Get (ref)</code>?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Nie ma żadnej różnicy.</button>
+            <button class="quiz-option" type="button">Copy działa tylko z aktorami, a ref tylko z tekstem.</button>
+            <button class="quiz-option" type="button" data-correct="true">Copy pobiera kopię wartości, a ref daje odwołanie do elementu na liście.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>6. Do czego służy <code>For Each Loop</code>?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-correct="true">Do wykonania tej samej akcji dla każdego elementu listy.</button>
+            <button class="quiz-option" type="button">Do zatrzymania całej gry.</button>
+            <button class="quiz-option" type="button">Do ustawiania kamery w Viewporcie.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>7. Jak działa Event Dispatcher?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Przenosi aktora na inną mapę.</button>
+            <button class="quiz-option" type="button" data-correct="true">Jeden Blueprint nadaje sygnał, a podpięte obiekty mogą na niego zareagować.</button>
+            <button class="quiz-option" type="button">Tworzy nową listę komponentów w Content Browserze.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>8. Dlaczego odbiorca Event Dispatchera zwykle potrzebuje referencji do nadawcy?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button" data-correct="true">Bo musi wiedzieć, do którego konkretnego aktora i jego sygnału ma się podpiąć.</button>
+            <button class="quiz-option" type="button">Bo inaczej nie da się uruchomić poziomu.</button>
+            <button class="quiz-option" type="button">Bo każdy dispatcher działa tylko z jedną teksturą.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>9. Kiedy użyć zwykłej zmiennej <code>Single</code>?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Gdy chcemy przechować dowolną liczbę różnych typów danych naraz.</button>
+            <button class="quiz-option" type="button">Gdy potrzebujemy tabeli par klucz i wartość.</button>
+            <button class="quiz-option" type="button" data-correct="true">Gdy potrzebujemy zapamiętać dokładnie jedną wartość, na przykład czy drzwi są otwarte.</button>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <p>10. Czym różni się Event Dispatcher od interface?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" type="button">Interface jest tylko do materiałów, a dispatcher tylko do dźwięków.</button>
+            <button class="quiz-option" type="button" data-correct="true">Interface jest umową z funkcjami do wywołania, a dispatcher jest sygnałem, do którego inni mogą się podpiąć.</button>
+            <button class="quiz-option" type="button">Nie różnią się niczym i zawsze używa się ich zamiennie.</button>
+          </div>
+        </div>
+
+        <div class="quiz-result" aria-live="polite">
+          Wynik: <span data-quiz-score>0</span>/<span data-quiz-total>10</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="zadanie">
+      <h2>Zadanie</h2>
+      <p class="lead">
+        Stwórz kilka drzwi otwierane kluczem, niech każde dzwi wymagają innego klucza.
+      </p>
+    </section>
+  </main>
+
+  <script src="js/course-page.js" defer></script>
+</body>
+</html>
