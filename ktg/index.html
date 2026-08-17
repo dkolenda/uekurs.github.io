@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wstęp do tworzenia gier w Unreal Engine</title>
+  <meta name="description" content="Przekrojowy, darmowy kurs tworzenia gier i aplikacji interaktywnych w Unreal Engine — program, informacje organizacyjne i materiały.">
+  <link rel="stylesheet" href="css/course-page.css">
+  <link rel="stylesheet" href="css/home-page.css">
+</head>
+<body>
+  <nav class="right-nav" aria-label="Nawigacja po stronie kursu">
+    <strong>Nawigacja</strong>
+    <a href="#start">Start</a>
+    <a href="#o-kursie">O kursie</a>
+    <a href="#informacje">Informacje organizacyjne</a>
+    <a href="#prowadzacy">Prowadzący</a>
+    <a href="#program">Program kursu</a>
+    <a href="#materialy">Materiały</a>
+    <div class="nav-hint">Kurs w pełni darmowy dla uczniów Szkoły w Chmurze — podobnie jak wszystkie użyte w nim programy.</div>
+  </nav>
+
+  <main>
+    <header class="hero" id="start">
+      <p class="eyebrow">Kurs KTG · Szkoła w Chmurze</p>
+      <h1>Wstęp do tworzenia gier w Unreal Engine</h1>
+
+      <figure class="hero-banner-frame">
+        <img
+          class="hero-banner-img"
+          data-parallax="0.05"
+          data-parallax-max="18"
+          src="ktg_assets/img/baner.png"
+          alt="Baner kursu: „Wstęp do tworzenia gier w Unreal Engine”, logo Unreal Engine, plakietka „Kurs online” oraz zrzuty ekranu edytora Unreal Engine."
+        >
+      </figure>
+
+      <div class="hero-below section">
+        <p class="hero-lead">
+          Przekrojowy kurs tworzenia gier i aplikacji interaktywnych — od pomysłu i prototypu, przez programowanie
+          i level design, aż po UX, animacje, narrację i AI.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-ghost" href="#program">Zobacz program kursu</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><span class="stat-num">20</span><span class="stat-label">godzin zajęć</span></div>
+          <div class="stat"><span class="stat-num">20</span><span class="stat-label">spotkań</span></div>
+          <div class="stat"><span class="stat-num">0</span><span class="stat-label">zł — kurs darmowy</span></div>
+        </div>
+      </div>
+
+      <a class="scroll-cue" href="#o-kursie" aria-label="Przewiń do sekcji „O kursie”">↓</a>
+    </header>
+
+    <section class="section reveal" id="o-kursie">
+      <h2>O kursie</h2>
+      <p>
+        Na prośbę moich dzieci przygotowałem dla nich i innych chmurkowiczów przekrojowy kurs tworzenia gier i aplikacji
+        interaktywnych z wykorzystaniem Unreal Engine.
+      </p>
+      <p>
+        Na przykładzie tworzenia własnej gry przyjrzymy się różnym aspektom pracy nad oprogramowaniem: od pomysłu
+        i prototypu, przez programowanie i projektowanie poziomów, aż po UX, interfejs, animacje czy zarządzanie
+        projektem.
+      </p>
+      <p>
+        Najwięcej czasu poświęcimy programowaniu, UX, level designowi i organizacji pracy nad projektem. Zahaczymy
+        jednak również o tematy pokrewne: animację, narrację, psychologię gracza, matematykę wykorzystywaną w grach
+        oraz AI.
+      </p>
+      <p>
+        Porozmawiamy też z gośćmi zawodowo pracującymi z Unreal Engine, którzy pokażą nam inne strony tej branży —
+        m.in. tworzenie środowisk, materiałów i efektów specjalnych oraz wykorzystanie Unreal Engine w produkcji
+        filmowej.
+      </p>
+
+      <div class="audience-grid" aria-label="Dla kogo jest ten kurs">
+        <article class="audience-tile">
+          <span class="audience-icon">🎮</span>
+          <strong>Gamedev</strong>
+          <span>Projektowanie i programowanie własnych gier od podstaw.</span>
+        </article>
+        <article class="audience-tile">
+          <span class="audience-icon">🎬</span>
+          <strong>Produkcja filmowa</strong>
+          <span>Virtual Production i realizacja scen z użyciem silnika gry.</span>
+        </article>
+        <article class="audience-tile">
+          <span class="audience-icon">🏛️</span>
+          <strong>Architektura</strong>
+          <span>Interaktywne wizualizacje architektoniczne w czasie rzeczywistym.</span>
+        </article>
+        <article class="audience-tile">
+          <span class="audience-icon">🚗</span>
+          <strong>Interfejsy</strong>
+          <span>Interaktywne UI, np. systemy multimedialne w samochodach.</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="section reveal" id="informacje">
+      <h2>Informacje organizacyjne</h2>
+
+      <div class="info-strip" aria-label="Podstawowe informacje o kursie">
+        <div class="info-card">
+          <strong>20 godzin</strong>
+          <span>łącznego czasu zajęć w ramach kursu.</span>
+        </div>
+        <div class="info-card">
+          <strong>20 spotkań</strong>
+          <span>teoretycznych i praktycznych, opisanych w programie kursu.</span>
+        </div>
+        <div class="info-card">
+          <strong>0 zł</strong>
+          <span>kurs w pełni darmowy dla uczniów Szkoły w Chmurze.</span>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 26px;">Rodzaje spotkań</h3>
+      <p class="lead">Spotkania są podzielone na dwa rodzaje, czasem łączone w ramach jednych zajęć:</p>
+      <div class="legend-row">
+        <span class="legend-chip legend-t"><b>T</b> zajęcia teoretyczne — rozmawiamy o konkretnych zagadnieniach</span>
+        <span class="legend-chip legend-p"><b>P</b> zajęcia praktyczne — wspólnie tworzymy własną grę w Unreal Engine</span>
+      </div>
+
+      <h3 style="margin-top: 26px;">Kontakt i materiały</h3>
+      <div class="contact-row">
+        <div class="contact-card">
+          <span class="contact-icon">🔗</span>
+          <div>
+            <strong>Link do zajęć</strong>
+            <span>Pojawi się w komentarzu do wydarzenia 15 minut przed rozpoczęciem spotkania.</span>
+          </div>
+        </div>
+        <div class="contact-card">
+          <span class="contact-icon">💬</span>
+          <div>
+            <strong>Pytania po zajęciach</strong>
+            <span>Zadawajcie je w komentarzach pod wydarzeniem w aplikacji SwCh lub na naszej grupie Discord (link wkrótce).</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="free-banner">
+        <span class="free-badge">🎁</span>
+        <p>
+          <strong>Ten kurs jest w pełni darmowy</strong> dla uczniów Szkoły w Chmurze — wszystkie programy
+          wykorzystywane w kursie, w tym Unreal Engine, są również darmowe.
+        </p>
+      </div>
+    </section>
+
+    <section class="section reveal" id="prowadzacy">
+      <h2>Dwa słowa o prowadzącym</h2>
+      <div class="instructor-card">
+        <div class="avatar-ring"><span>DK</span></div>
+        <div class="instructor-bio">
+          <p>
+            Nazywam się <strong>Damian Kolenda</strong>. Od kilkunastu lat zawodowo programuję, projektuję aplikacje
+            i zarządzam projektami IT. Pracowałem przy różnych typach oprogramowania — od aplikacji internetowych
+            i mobilnych po aplikacje desktopowe i rozszerzenia przeglądarek. Obecnie zajmuję się głównie tworzeniem
+            aplikacji związanych z bezpieczeństwem.
+          </p>
+          <div class="instructor-links">
+            <a class="link-pill" href="https://www.linkedin.com/in/damian-kolenda/" target="_blank" rel="noopener noreferrer">🔗 LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="program">
+      <h2>Szczegółowy program kursu</h2>
+      <p class="lead">20 spotkań — kliknij, aby rozwinąć zagadnienia poruszane na każdych zajęciach.</p>
+
+      <div class="timeline">
+        <details class="timeline-item has-page">
+          <summary>
+            <span class="timeline-num">1</span>
+            <strong>Wstęp do tworzenia gier</strong>
+            <span class="timeline-date">04.09 15:00</span>
+            <span class="timeline-tags"><span class="tag tag-t">T</span><span class="tag tag-p">P</span></span>
+          </summary>
+          <ul class="timeline-topics">
+            <li>Jak powstają gry?</li>
+            <li>Kto pracuje przy tworzeniu gier i czym zajmują się poszczególne osoby?</li>
+            <li>Jakich narzędzi używa się przy produkcji gier?</li>
+            <li>Wprowadzenie do Unreal Engine</li>
+            <li>Instalacja i pierwsze kroki</li>
+          </ul>
+          <div class="timeline-actions" aria-label="Materiały do lekcji 1">
+            <a class="timeline-action-btn" href="https://docs.google.com/presentation/d/1xmQeCKGIWJx4IrpIYVyItrjOiQphjO72nY1IkC7O7V8/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Prezentacja</a>
+            <a class="timeline-action-btn timeline-action-btn-secondary" href="../ktg_lekcje.html#lekcja-1" target="_blank" rel="noopener noreferrer">Materiały</a>
+          </div>
+        </details>
+
+        <details class="timeline-item is-upcoming">
+          <summary>
+            <span class="timeline-num">2</span>
+            <strong>Unreal Engine — pierwsze kroki</strong>
+            <span class="timeline-tags"><span class="tag tag-p">P</span></span>
+          </summary>
+          <ul class="timeline-topics">
+            <li>Rozmieszczanie elementów na scenie</li>
+            <li>Podstawy tworzenia logiki: zdarzenia i zmienne</li>
+            <li>Przykłady praktyczne: drabina i portal</li>
+          </ul>
+        </details>
+
+        <details class="timeline-item is-upcoming">
+          <summary>
+            <span class="timeline-num">3</span>
+            <strong>Od pomysłu do prototypu</strong>
+            <span class="timeline-tags"><span class="tag tag-t">T</span></span>
+          </summary>
+          <ul class="timeline-topics">
+            <li>Jak wygląda proces planowania i analizy?</li>
+            <li>Dla kogo tworzymy grę?</li>
+            <li>Podstawowa pętla rozgrywki — game loop</li>
+            <li>Prototypowanie i blockout</li>
+          </ul>
+        </details>
+
+        <details class="timeline-item is-upcoming">
+          <summary>
+            <span class="timeline-num">4</span>
+            <strong>Unreal Engine — animacje</strong>
+            <span class="timeline-tags"><span class="tag tag-p">P</span></span>
+          </summary>
+          <ul class="timeline-topics">
+            <li>Poruszanie aktorów — na przykładzie drzwi</li>
+            <li>Tworzenie prostych cutscenek</li>
+            <li>Animacje akcji gracza</li>
+          </ul>
+        </details>
+
+        <details class="timeline-item is-upcoming">
+          <summary>
+            <span class="timeline-num">5</span>
+            <strong>Psychologia gracza</strong>
+            <span class="timeline-tags"><span class="tag tag-t">T</span></span>
+          </summary>
+          <ul class="timeline-topics">
+            <li>Co motywuje gracza? Teoria autodeterminacji</li>
+            <li>Typologia graczy Bartle'a</li>
+            <li>Stan flow</li>
+            <li>Schematy i błędy poznawcze</li>
+            <li>Warunkowanie instrumentalne</li>
+            <li>Gamifikacja i wykorzystywanie mechanizmów znanych z gier</li>
+            <li>Dark patterns w grach</li>
+            <li>Zaburzenia związane z graniem</li>
+          </ul>
+        </details>
+
+        <details class="timeline-item is-upcoming">
+          <summary>
+            <span class="timeline-num">6</span>
+            <strong>Unreal Engine — animacje, cz. 2</strong>
+            <span class="timeline-tags"><span class="tag tag-p">P</span></span>
+          </summary>
+          <ul class="timeline-topics">
+            <li>MetaHuman — tworzymy realistycznego bohatera</li>
+            <li>Tworzenie własnych animacji</li>
+            <li>Przykłady praktyczne: podlewanie grządki i użyźnianie gleby</li>
+          </ul>
+        </details>
+
+        <details class="timeline-item is-upcoming">
+          <summary>
+            <span class="timeline-num">7</span>
+            <strong>Fabuła i narracja w grach</strong>
+            <span class="timeline-tags"><span class="tag tag-t">T</span></span>
+          </summary>
+          <ul class="timeline-topics">
+            <li>Pacing — tempo opowiadania historii</li>
+            <li>Struktura trzech aktów</li>
+            <li>Monomit, czyli podróż bohatera</li>
+            <li>Teoria równowagi Tzvetana Todorova</li>
+            <li>Narracja emergentna</li>
+            <li>Narzędzia pisarza: konflikt, foreshadowing, fałszywy trop, retrospekcja i inne</li>
+            <li>Metody szybkiego tworzenia historii: graf świata, historia zbudowana wokół przedmiotu, siedem złotych pytań kryminalistycznych</li>
+          </ul>
+        </details>
+
+        <details class="timeline-item is-upcoming">
+          <summary>
+            <span class="timeline-num">8</span>
+            <strong>Unreal Engine — porządkowanie i optymalizacja projektu</strong>
+            <span class="timeline-tags"><span class="tag tag-p">P</span></span>
+          </summary>
+          <ul class="timeline-topics">
+            <li>Debugowanie</li>
+            <li>Analiza zależności</li>
+            <li>Podstawy zasad SOLID</li>
+            <li>Funkcje</li>
+            <li>Komunikacja między aktorami: Interface, Event Dispatcher, Subsystem</li>
+          </ul>
+        </details>
+
+        <details class="timeline-item is-upcoming">
+          <summary>
+            <span class="timeline-num">9</span>
+            <strong>Wprowadzenie do level designu</strong>
+            <span class="timeline-tags"><span class="tag tag-t">T</span></span>
+          </summary>
+          <ul class="timeline-topics">
+            <li>Psychologia gracza w projektowaniu poziomów</li>
+            <li>Opowiadanie historii za pomocą otoczenia</li>
+            <li>Ścieżki gracza i subtelne kierowanie jego uwagą</li>
+            <li>Typowe błędy projektowe</li>
+            <li>Blockout</li>
+          </ul>
+        </details>
+
+        <details class="timeline-item is-upcoming">
+          <summary>
+            <span class="timeline-num">10</span>
+            <strong>Unreal Engine — mechanika, cz. 3</strong>
+            <span class="timeline-tags"><span class="tag tag-p">P</span></span>
+          </summary>
+          <ul class="timeline-topics">
+            <li>Zmienne publiczne i listy</li>
+            <li>Event Dispatchers</li>
+            <li>Przykład praktyczny: tworzymy zagadkę</li>
+          </ul>
+        </details>
+
+        <details class="timeline-item is-upcoming">
+          <summary>
+            <span class="timeline-num">11</span>
+            <strong>Level design — projektowanie w 2D</strong>
+            <span class="timeline-tags"><span class="tag tag-t">T</span><span class="tag tag-p">P</span></span>
+          </summary>
+          <ul class="timeline-topics">
+            <li>Dlaczego research jest ważny?</li>
+            <li>Od pomysłu do planu poziomu</li>
+            <li>Projektowanie levelu w 2D</li>
+            <li>Rysujemy własne poziomy na kartkach</li>
+          </ul>
+        </details>
+
+        <details class="timeline-item is-upcoming">
+          <summary>
+            <span class="timeline-num">12</span>
+            <strong>UX i UI w grach</strong>
+            <span class="timeline-tags"><span class="tag tag-t">T</span></span>
+          </summary>
+          <ul class="timeline-topics">
+            <li>Zasady projektowania dobrego interfejsu</li>
+            <li>Najczęstsze błędy</li>
+            <li>Interfejs diegetyczny</li>
+            <li>Otoczenie jako element interfejsu</li>
+            <li>Czym jest HUD?</li>
+          </ul>
+        </details>
+
+        <details class="timeline-item is-upcoming">
+          <summary>
+            <span class="timeline-num">13</span>
+            <strong>UI w praktyce</strong>
+            <span class="timeline-tags"><span class="tag tag-p">P</span></span>
+          </summary>
+          <ul class="timeline-topics">
+            <li>Czym jest Widget?</li>
+            <li>Podstawy tworzenia UI w Unreal Engine</li>
+            <li>Przykłady praktyczne: HUD i ekwipunek</li>
+          </ul>
+        </details>
+
+        <details class="timeline-item is-upcoming">
+          <summary>
+            <span class="timeline-num">14</span>
+            <strong>Matematyka w grach</strong>
+            <span class="timeline-tags"><span class="tag tag-t">T</span></span>
+          </summary>
+          <ul class="timeline-topics">
+            <li>Punkty i wektory</li>
+            <li>Okręgi, koła i trójkąty</li>
+            <li>Sinus i cosinus — gdzie naprawdę przydają się w grach?</li>
+            <li>Kilka bardzo przydatnych wzorów i przykładów</li>
+          </ul>
+        </details>
+
+        <details class="timeline-item is-upcoming">
+          <summary>
+            <span class="timeline-num">15</span>
+            <strong>Unreal Engine — mechanika, cz. 4</strong>
+            <span class="timeline-tags"><span class="tag tag-p">P</span></span>
+          </summary>
+          <ul class="timeline-topics">
+            <li>Mapowanie sterowania</li>
+            <li>Obsługa kontrolera</li>
+            <li>Wykrywanie przedmiotów</li>
+            <li>Interakcja z obiektami w świecie gry</li>
+          </ul>
+        </details>
+
+        <details class="timeline-item is-upcoming">
+          <summary>
+            <span class="timeline-num">16</span>
+            <strong>Gość: Lead Virtual Production w Warner Bros. Discovery</strong>
+            <span class="timeline-tags"><span class="tag tag-t">T</span><span class="tag tag-p">P</span></span>
+          </summary>
+          <ul class="timeline-topics">
+            <li>Jak tworzy się filmy z wykorzystaniem Unreal Engine?</li>
+            <li>Virtual Production od kuchni</li>
+            <li>Materiały i efekty specjalne</li>
+          </ul>
+        </details>
+
+        <details class="timeline-item is-upcoming">
+          <summary>
+            <span class="timeline-num">17</span>
+            <strong>Level design — projektowanie w 3D</strong>
+            <span class="timeline-tags"><span class="tag tag-p">P</span></span>
+          </summary>
+          <ul class="timeline-topics">
+            <li>Przenosimy projekt 2D do Unreal Engine</li>
+            <li>Budujemy blockout poziomu</li>
+            <li>Testujemy ścieżki gracza i czytelność przestrzeni</li>
+          </ul>
+        </details>
+
+        <details class="timeline-item is-upcoming">
+          <summary>
+            <span class="timeline-num">18</span>
+            <strong>AI aktorów</strong>
+            <span class="timeline-tags"><span class="tag tag-t">T</span><span class="tag tag-p">P</span></span>
+          </summary>
+          <ul class="timeline-topics">
+            <li>Do czego potrzebujemy AI w grach?</li>
+            <li>Podejmowanie decyzji przez postacie</li>
+            <li>Podstawy zachowania NPC</li>
+            <li>Pierwsze własne AI w Unreal Engine</li>
+          </ul>
+        </details>
+
+        <details class="timeline-item is-upcoming">
+          <summary>
+            <span class="timeline-num">19</span>
+            <strong>AI aktorów, cz. 2 / spotkanie z gościem</strong>
+            <span class="timeline-tags"><span class="tag tag-p">P</span></span>
+          </summary>
+          <ul class="timeline-topics">
+            <li>Rozwijamy zachowania NPC</li>
+            <li>Łączymy AI z mechanikami naszej gry</li>
+            <li>Temat spotkania z gościem zostanie podany po jego potwierdzeniu</li>
+          </ul>
+        </details>
+
+        <details class="timeline-item is-upcoming">
+          <summary>
+            <span class="timeline-num">20</span>
+            <strong>C++ i AI jako pomoc w programowaniu</strong>
+            <span class="timeline-tags"><span class="tag tag-t">T</span><span class="tag tag-p">P</span></span>
+          </summary>
+          <ul class="timeline-topics">
+            <li>Po co Unreal Engine wykorzystuje C++?</li>
+            <li>Blueprinty a C++</li>
+            <li>Jak wygląda kod w projekcie Unreal Engine?</li>
+            <li>Czym jest „vibe coding”?</li>
+            <li>Jak korzystać z AI jako wsparcia podczas programowania — i gdzie trzeba na nie uważać?</li>
+          </ul>
+        </details>
+      </div>
+    </section>
+
+    <section class="section reveal cta-section" id="materialy">
+      <h2>Gotowi na start?</h2>
+      <p class="lead">
+        Zajęcia będą odbywać się raz w tygodniu i zaczynają się <strong>04.09 15:00</strong>.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-disabled" aria-disabled="true" tabindex="-1">📚 Otwórz listę materiałów</a>
+        <a class="btn btn-ghost" href="#program">↑ Wróć do programu</a>
+      </div>
+    </section>
+  </main>
+
+  <a href="#start" class="back-to-top" aria-label="Wróć na górę strony">↑</a>
+
+  <script src="js/home-page.js" defer></script>
+</body>
+</html>
