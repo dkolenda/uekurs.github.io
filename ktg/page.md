@@ -24,7 +24,10 @@ Spotkania będą podzielone na:
 Link do zajęć pojawi się w komentarzu do wydarzenia 15 minut przed rozpoczęciem spotkania.
 
 Jeśli po zajęciach pojawią się pytania, możecie zadawać je w komentarzach pod wydarzeniem w aplikacji SwCh lub na naszej grupie Discord:
-[link]
+https://discord.gg/wz2NytQ2kA
+
+Ankieta, w jakich terminach robić kolejne zajęcia:
+https://forms.gle/KFguqqn21eopVK5c7
 
 Ten kurs jest wpełni darmowy dla uczniów szkoły w chmurze, wszystkie programy wykorzystywane w tym kursie (w tym Unreal Engine) są rowniez darmowe
 
