@@ -1,6 +1,6 @@
 # Wstep do tworzenia gier w Unreal Engine
 (znajdz miejsce na zakladke materialy)
-[ktg_assets/img/baner.png]
+[ktg_assets/img/baner2.png]
 
 Na prośbę moich dzieci przygotowałem dla nich — i dla Was — przekrojowy kurs tworzenia gier i aplikacji interaktywnych z wykorzystaniem Unreal Engine.
 
