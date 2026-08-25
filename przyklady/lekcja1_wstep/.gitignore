@@ -1,0 +1,26 @@
+# Unreal Engine generated folders
+.vs/
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+
+# Generated project files
+*.sln
+*.suo
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.opendb
+*.code-workspace
+*.xcworkspace
+*.xcodeproj/
+
+# Local editor and OS files
+.idea/
+*.user
+*.userprefs
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
