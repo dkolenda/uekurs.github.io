@@ -578,6 +578,12 @@
   transition: background 160ms ease, transform 160ms ease;
 }
 
+.timeline-video-btn {
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
+}
+
 .timeline-action-btn:hover,
 .timeline-action-btn:focus-visible {
   background: var(--primary-dark);
