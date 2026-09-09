@@ -298,6 +298,51 @@ kbd,
   font-weight: 800;
 }
 
+.tile-icon.editor-icons {
+  width: auto;
+  min-width: 52px;
+  height: 42px;
+  padding: 4px;
+  gap: 5px;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #202020;
+  color: transparent;
+  font-size: 0;
+}
+
+/* Cropped directly from the Place Actors sidebar in ktg2_interface.png. */
+.editor-icon {
+  display: block;
+  width: 44px;
+  height: 34px;
+  border-radius: 4px;
+  background-image: url("../ktg_assets/img/ktg2_interface.png");
+  background-repeat: no-repeat;
+  background-size: 1918px 1016px;
+}
+
+.editor-icon--shapes {
+  background-position: -22px -598px;
+}
+
+.editor-icon--lights {
+  background-position: -22px -444px;
+}
+
+.editor-icon--cine {
+  background-position: -22px -524px;
+}
+
+.editor-icon--trigger-box {
+  width: 34px;
+  background-position: -105px -456px;
+}
+
+.editor-icon--vfx {
+  background-position: -22px -810px;
+}
+
 .list-methods {
   grid-template-columns: 1fr;
 }
