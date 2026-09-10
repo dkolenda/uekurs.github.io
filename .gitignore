@@ -1,0 +1,46 @@
+# Unreal Engine generated files
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+
+# Generated project and workspace files
+*.sln
+*.suo
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.opendb
+*.xcodeproj
+*.xcworkspace
+Makefile
+CMakeLists.txt
+*.code-workspace
+
+# IDE settings
+.vs/
+.idea/
+.vscode/
+
+# Build-system and compiler output
+.gradle/
+*.pdb
+*.obj
+*.o
+*.lo
+*.la
+*.dll
+*.so
+*.dylib
+*.exe
+*.ipa
+*.apk
+*.aab
+
+# UnrealBuildTool local files
+Engine/Programs/UnrealBuildTool/BuildConfiguration.xml
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+Desktop.ini
